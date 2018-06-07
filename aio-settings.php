@@ -227,7 +227,7 @@
                 <tr class="alternate">
                     <th scope="col" class="manage-column column-columnname"><strong>Enable Location: </strong></th>
                     <td>
-                        Available in Pro <a href="https://codebangers.com/product/all-in-one-time-clock/" target="_blank">Pro</a>
+                        Available in <a href="https://codebangers.com/product/all-in-one-time-clock/" target="_blank">Pro</a>
                     </td>
                     <td>
                         <i>
@@ -241,7 +241,7 @@
                 <tr class="alternate">
                     <th scope="col" class="manage-column column-columnname"><strong>Show Shift Notes on Report Page: </strong></th>
                     <td>
-                        Available in Pro <a href="https://codebangers.com/product/all-in-one-time-clock/" target="_blank">Pro</a>
+                        Available in <a href="https://codebangers.com/product/all-in-one-time-clock/" target="_blank">Pro</a>
                     </td>
                     <td>
                         <i>
