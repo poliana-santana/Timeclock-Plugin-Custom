@@ -14,7 +14,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Employees can easily clock in and out.  Managers can easily keep track of employees and their time.
 
 = Features =
-1. Keep track or employee and volunteer shifts. 
+1. Keep track of employee and volunteer shifts. 
 2. Generate reports.
 3. Manage employee departments and wages.
 4. Create and edit shifts.
@@ -24,7 +24,7 @@ Employees can easily clock in and out.  Managers can easily keep track of employ
 
 1. Upload 'aio-time-clock-lite' folder to the '/wp-content/plugins/' directory
 2. Activate 'AIO Time Clock Lite' from wp plugin lists in admin area
-3. Time Clock will appear in left hand menu.
+3. Time Clock menu option will appear in left hand menu.
 4. Visit the general settings to create and customize your time clock page.
 
 
