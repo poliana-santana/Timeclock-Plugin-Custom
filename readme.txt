@@ -1,7 +1,7 @@
 === AIO Time Clock ===
 Contributors: codebangers
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FPW6RYHR6X8SQ
-Tags: aio time clock, employee time clock, volunteer, managers, employees, paycheck, punch clock, time tracking, time, clock, payments
+Tags: time clock, aio time clock, employee, volunteer, managers, employees, paycheck, punch clock, time tracking, time, clock, payments, all in one time clock, timeclock
 Requires at least: 2.0
 Tested up to: 4.9.6
 Requires PHP: 5.2.4
