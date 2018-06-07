@@ -1,3 +1,14 @@
+=== AIO Time Clock ===
+Contributors: codebangers
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FPW6RYHR6X8SQ
+Tags: aio time clock, employee time clock, volunteer, managers, employees, paycheck, punch clock, time tracking, time, clock, payments
+Requires at least: 2.0
+Tested up to: 4.9.6
+Requires PHP: 5.2.4
+Stable tag: 4.3
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
 == Description ==
 
 Employees can easily clock in and out.  Managers can easily keep track of employees and their time.
