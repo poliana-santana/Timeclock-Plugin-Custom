@@ -17,6 +17,7 @@ add_action('admin_init', 'aio_tc_custom_post_shift_lite');
 add_action("admin_init", "aio_timeclock_admin_init_lite");
 add_action('add_meta_boxes', 'aio_shift_info_box_meta_lite');
 add_action('admin_menu', 'aio_remove_my_post_metaboxes_lite');
+add_action('admin_init', 'register_aio_timeclock_settings');
 add_action('init', 'aio_tc_script_enqueuer_lite');
 add_action('admin_init', 'aio_admin_tc_script_enqueuer_lite');
 add_filter('user_contactmethods', 'aio_modify_employee_wage_lite');
@@ -482,8 +483,7 @@ function aio_timeclock_reports_page()
 
 function register_aio_timeclock_settings()
 {
-    register_setting('nertworks-timeclock-settings-group', 'aio_company_name');
-    register_setting('nertworks-timeclock-settings-group', 'aio_payday_reminder');
+    register_setting('nertworks-timeclock-settings-group', 'aio_company_name');    
     register_setting('nertworks-timeclock-settings-group', 'aio_pay_schedule');
     register_setting('nertworks-timeclock-settings-group', 'aio_wage_manage');
     register_setting('nertworks-timeclock-settings-group', 'aio_timeclock_time_zone');
@@ -491,11 +491,6 @@ function register_aio_timeclock_settings()
     register_setting('nertworks-timeclock-settings-group', 'aio_timeclock_redirect_employees');
     register_setting('nertworks-timeclock-settings-group', 'aio_timeclock_show_avatar');
     register_setting('nertworks-timeclock-settings-group', 'aio_timeclock_show_current_dept');
-    register_setting('nertworks-timeclock-settings-pp', 'aio_pp_start_date');
-    register_setting('nertworks-timeclock-settings-pp', 'aio_pp_end_date');
-    register_setting('nertworks-timeclock-diag-group', 'aio_wage_diag');
-    register_setting('nertworks-timeclock-diag-group', 'aio_name_diag');
-    register_setting('nertworks-timeclock-diag-group', 'aio_total_diag');
 }
 
 function aio_check_tc_shortcode_lite()
