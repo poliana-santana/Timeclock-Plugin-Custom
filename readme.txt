@@ -1,8 +1,8 @@
 === AIO Time Clock ===
 Contributors: codebangers
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FPW6RYHR6X8SQ
-Tags: time clock, aio time clock, employee, volunteer, managers, employees, paycheck, punch clock, time tracking, time, clock, payments, all in one time clock, timeclock
-Requires at least: 2.0
+Tags: time clock, employee, time, clock, wordpress, volunteer, aio time clock, employee, managers, employees, paycheck, punch clock, time tracking, time, clock, payments, all in one time clock, timeclock
+Requires at least: 3.0
 Tested up to: 4.9.6
 Requires PHP: 5.2.4
 Stable tag: 4.3
@@ -11,7 +11,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-Employees can easily clock in and out.  Managers can easily keep track of employees and their time.
+Employees can easily clock in and out.  Managers can easily keep track of employees/volunteers and their time.
 
 = Features =
 1. Keep track of employee and volunteer shifts. 
