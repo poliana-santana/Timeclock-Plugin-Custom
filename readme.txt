@@ -13,6 +13,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Employees can easily clock in and out.  Managers can easily keep track of employees/volunteers and their time.
 
+[youtube https://youtu.be/OS8zy4PQtlY]
+
 = Features =
 1. Keep track of employee and volunteer shifts. 
 2. Generate reports.
