@@ -70,7 +70,7 @@ function aio_timeclock_plugin_admin_menu()
 {
     $page_hook_suffix = add_menu_page('Time Clock', 'Time Clock', 'administrator', 'aio-tc-lite', 'aio_timeclock_settings_page', 'dashicons-clock');
     add_submenu_page('aio-tc-lite', 'General Settings', 'General Settings', 'administrator', 'aio-tc-lite', 'aio_timeclock_settings_page');
-    add_submenu_page('aio-tc-lite', 'Real Time', 'Real Time Monitoring', 'administrator', 'aio-monitoring-sub', 'aio_timeclock_monitoring_page');
+    add_submenu_page('aio-tc-lite', 'Real Time Monitoring', 'Real Time Monitoring', 'administrator', 'aio-monitoring-sub', 'aio_timeclock_monitoring_page');
     add_submenu_page('aio-tc-lite', 'Employees', 'Employees', 'administrator', 'aio-employees-sub', 'aio_timeclock_employee_page');
     add_submenu_page('aio-tc-lite', 'Departments', 'Departments', 'administrator', 'aio-department-sub', 'aio_timeclock_department_page');
     add_submenu_page('aio-tc-lite', 'Managers', 'Managers', 'administrator', 'aio-managers-sub', 'aio_timeclock_manager_page');
