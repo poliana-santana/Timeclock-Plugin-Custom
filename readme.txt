@@ -29,7 +29,7 @@ Employees can easily clock in and out.  Managers can easily keep track of employ
 7. Employee IP Address Tracking
 8. Extensions/Addons to unlock even more
 
-= Learn More About Pro https://codebangers.com/product/all-in-one-time-clock/ =
+[Learn More About All in Time Clock Pro](https://codebangers.com/product/all-in-one-time-clock/)
 
 == Installation ==
 
