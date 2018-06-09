@@ -5,7 +5,7 @@ Tags: employee, time, clock, all in one, timeclock, wordpress, volunteer, aio ti
 Requires at least: 3.0
 Tested up to: 4.9.6
 Requires PHP: 5.2.4
-Stable tag: 1.0.0
+Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,7 +40,7 @@ Employees can easily clock in and out.  Managers can easily keep track of employ
 
 == Changelog ==
 
-2018.03.22 - Version 1.0.0
+2018.03.22 - Version 1.0
 
 	1. First Release
 
