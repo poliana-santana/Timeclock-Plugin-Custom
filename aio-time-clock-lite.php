@@ -5,7 +5,7 @@
  * Description: Employees can easily clock in and out.  Managers can easily keep track of employees and their time.
  * Author:      Codebangers
  * Author URI:  https://codebangers.com
- * Version:     1.0.0
+ * Version:     1.0.1
  */
 
 add_shortcode('show_aio_time_clock_lite', 'show_aio_time_clock_lite');
@@ -29,6 +29,7 @@ add_action('personal_options_update', 'aio_save_user_department_terms_lite');
 add_action('edit_user_profile_update', 'aio_save_user_department_terms_lite');
 add_action('admin_menu', 'aio_add_department_admin_page_lite');
 add_action('init', 'aio_user_taxonomy_lite');
+add_action('admin_menu','remove_my_post_metaboxes_aio_lite');
 
 if (is_admin()) {
     add_action('save_post', 'aio_save_shift_meta_lite');
@@ -40,6 +41,21 @@ if (is_admin()) {
 
 if (get_option('aio_timeclock_redirect_employees') == "enabled") {
     add_filter('login_redirect', 'aio_member_login_redirect', 10, 3);
+}
+
+add_filter( 'post_row_actions', 'aio_remove_row_actions', 10, 1 );
+
+function remove_my_post_metaboxes_aio_lite() {
+    remove_meta_box( 'authordiv','shift','normal' );
+    remove_meta_box( 'commentstatusdiv', 'shift', 'normal' );
+    remove_meta_box( 'commentsdiv', 'shift', 'normal' );
+}
+
+function aio_remove_row_actions( $actions )
+{
+    if( get_post_type() === 'shift' )
+        unset( $actions['view'] );
+    return $actions;
 }
 
 function show_aio_time_clock_lite($atts)
@@ -54,6 +70,7 @@ function aio_timeclock_plugin_admin_menu()
 {
     $page_hook_suffix = add_menu_page('Time Clock', 'Time Clock', 'administrator', 'aio-tc-lite', 'aio_timeclock_settings_page', 'dashicons-clock');
     add_submenu_page('aio-tc-lite', 'General Settings', 'General Settings', 'administrator', 'aio-tc-lite', 'aio_timeclock_settings_page');
+    add_submenu_page('aio-tc-lite', 'Real Time', 'Real Time Monitoring', 'administrator', 'aio-monitoring-sub', 'aio_timeclock_monitoring_page');
     add_submenu_page('aio-tc-lite', 'Employees', 'Employees', 'administrator', 'aio-employees-sub', 'aio_timeclock_employee_page');
     add_submenu_page('aio-tc-lite', 'Departments', 'Departments', 'administrator', 'aio-department-sub', 'aio_timeclock_department_page');
     add_submenu_page('aio-tc-lite', 'Managers', 'Managers', 'administrator', 'aio-managers-sub', 'aio_timeclock_manager_page');
@@ -275,6 +292,7 @@ function aio_tc_custom_post_shift_lite()
         'show_tagcloud' => false,
         'rewrite' => array('slug' => 'shifts'),
         'show_in_nav_menus' => false,
+        'supports' => false
     );
     register_post_type('shift', $args);
 }
@@ -474,6 +492,11 @@ function aio_remove_my_post_metaboxes_lite()
 function aio_timeclock_settings_page()
 {
     include "aio-settings.php";
+}
+
+function aio_timeclock_monitoring_page()
+{
+    include "aio-monitoring.php";
 }
 
 function aio_timeclock_reports_page()
