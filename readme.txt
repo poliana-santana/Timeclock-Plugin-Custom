@@ -43,3 +43,7 @@ Employees can easily clock in and out.  Managers can easily keep track of employ
 2018.03.22 - Version 1.0.0
 
 	1. First Release
+
+2018.06.09 - Version 1.0.1
+
+	1. Added real time monitoring
