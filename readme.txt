@@ -1,7 +1,7 @@
 === All in One Time Clock Lite ===
 Contributors: codebangers
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FPW6RYHR6X8SQ
-Tags: employee, time, clock, all in one, timeclock, wordpress, volunteer, aio time clock, managers, paycheck, punch clock, time tracking, time, clock, payments, all in one time clock, invoice
+Tags: employee, time, clock, timeclock, all in one, wordpress, volunteer, aio time clock, managers, paycheck, punch clock, time tracking, time, clock, payments, all in one time clock, invoice
 Requires at least: 3.0
 Tested up to: 4.9.6
 Requires PHP: 5.2.4
