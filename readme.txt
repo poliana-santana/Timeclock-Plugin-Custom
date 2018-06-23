@@ -1,4 +1,4 @@
-=== All in One Time Clock Lite ===
+=== All in One Time Clock Lite - A Wordpress Employee Time Tracker Plugin ===
 Contributors: codebangers
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FPW6RYHR6X8SQ
 Tags: employee, time, clock, timeclock, all in one, wordpress, volunteer, aio time clock, managers, paycheck, punch clock, time tracking, time, clock, payments, all in one time clock, invoice
