@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: All in One Time Clock Lite
+ * Plugin Name: All in One Time Clock Lite - A Wordpress Employee Time Tracker Plugin
  * Plugin URI:  https://codebangers.com
  * Description: Employees can easily clock in and out.  Managers can easily keep track of employees and their time.
  * Author:      Codebangers
