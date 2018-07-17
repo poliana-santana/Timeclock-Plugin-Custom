@@ -550,26 +550,34 @@ function aioGetTimeZoneList()
 
 function aio_timeclock_shifts_page()
 {
-    wp_redirect('/wp-admin/edit.php?post_type=shift');
-    exit();
+    //wp_redirect('/wp-admin/edit.php?post_type=shift');
+    echo '<script>
+        window.location="/wp-admin/edit.php?post_type=shift";
+    </script>';
 }
 
 function aio_timeclock_employee_page()
 {
-    wp_redirect('/wp-admin/users.php?role=employee');
-    exit();
+    //wp_redirect('/wp-admin/users.php?role=employee');
+    echo '<script>
+        window.location="/wp-admin/users.php?role=employee";
+    </script>';
 }
 
 function aio_timeclock_department_page()
 {
-    wp_redirect('/wp-admin/edit-tags.php?taxonomy=department');
-    exit();
+    //wp_redirect('/wp-admin/edit-tags.php?taxonomy=department');
+    echo '<script>
+        window.location="/wp-admin/edit-tags.php?taxonomy=department";
+    </script>';
 }
 
 function aio_timeclock_manager_page()
 {
-    wp_redirect('/wp-admin/users.php?role=manager');
-    exit();
+    //wp_redirect('/wp-admin/users.php?role=manager');
+    echo '<script>
+        window.location="/wp-admin/users.php?role=manager";
+    </script>';
 }
 
 function aioGetShiftTotalFromRange($employee, $date_range_start, $date_range_end)
