@@ -551,28 +551,28 @@ function aioGetTimeZoneList()
 function aio_timeclock_shifts_page()
 {    
     echo '<script>
-        window.location="'.admin_url().'/wp-admin/edit.php?post_type=shift";
+        window.location="'.admin_url().'/edit.php?post_type=shift";
     </script>';
 }
 
 function aio_timeclock_employee_page()
 {    
     echo '<script>
-        window.location="'.admin_url().'/wp-admin/users.php?role=employee";
+        window.location="'.admin_url().'/users.php?role=employee";
     </script>';
 }
 
 function aio_timeclock_department_page()
 { 
     echo '<script>
-        window.location="'.admin_url().'/wp-admin/edit-tags.php?taxonomy=department";
+        window.location="'.admin_url().'/edit-tags.php?taxonomy=department";
     </script>';
 }
 
 function aio_timeclock_manager_page()
 { 
     echo '<script>
-        window.location="'.admin_url().'/wp-admin/users.php?role=manager";
+        window.location="'.admin_url().'/users.php?role=manager";
     </script>';
 }
 
