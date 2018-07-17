@@ -551,21 +551,25 @@ function aioGetTimeZoneList()
 function aio_timeclock_shifts_page()
 {
     wp_redirect('/wp-admin/edit.php?post_type=shift');
+    exit();
 }
 
 function aio_timeclock_employee_page()
 {
     wp_redirect('/wp-admin/users.php?role=employee');
+    exit();
 }
 
 function aio_timeclock_department_page()
 {
     wp_redirect('/wp-admin/edit-tags.php?taxonomy=department');
+    exit();
 }
 
 function aio_timeclock_manager_page()
 {
     wp_redirect('/wp-admin/users.php?role=manager');
+    exit();
 }
 
 function aioGetShiftTotalFromRange($employee, $date_range_start, $date_range_end)
