@@ -549,34 +549,30 @@ function aioGetTimeZoneList()
 }
 
 function aio_timeclock_shifts_page()
-{
-    //wp_redirect('/wp-admin/edit.php?post_type=shift');
+{    
     echo '<script>
-        window.location="/wp-admin/edit.php?post_type=shift";
+        window.location="'.admin_url().'/wp-admin/edit.php?post_type=shift";
     </script>';
 }
 
 function aio_timeclock_employee_page()
-{
-    //wp_redirect('/wp-admin/users.php?role=employee');
+{    
     echo '<script>
-        window.location="/wp-admin/users.php?role=employee";
+        window.location="'.admin_url().'/wp-admin/users.php?role=employee";
     </script>';
 }
 
 function aio_timeclock_department_page()
-{
-    //wp_redirect('/wp-admin/edit-tags.php?taxonomy=department');
+{ 
     echo '<script>
-        window.location="/wp-admin/edit-tags.php?taxonomy=department";
+        window.location="'.admin_url().'/wp-admin/edit-tags.php?taxonomy=department";
     </script>';
 }
 
 function aio_timeclock_manager_page()
-{
-    //wp_redirect('/wp-admin/users.php?role=manager');
+{ 
     echo '<script>
-        window.location="/wp-admin/users.php?role=manager";
+        window.location="'.admin_url().'/wp-admin/users.php?role=manager";
     </script>';
 }
 
