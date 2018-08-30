@@ -171,7 +171,7 @@
                             page. 
                         </i>
                     </td>
-                </tr>
+                </tr>            
                 <tr>
                     <th scope="col" class="manage-column column-columnname"><strong>Show Employee Avatar: </strong></th>
                     <td>
@@ -232,6 +232,24 @@
                     <td>
                         <i>
                             When enabled, employees can select the location they are clocking in at.
+                        </i>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col" class="manage-column column-columnname"><strong>Use Javascript Redirect: </strong></th>
+                    <td>
+                        <input type="radio" name="aio_use_javascript_redirect"
+                               value="enabled" <?php if (get_option('aio_use_javascript_redirect') == "enabled") {
+                            echo "checked";
+                        } ?> />Enabled
+                        <input type="radio" name="aio_use_javascript_redirect"
+                               value="disabled" <?php if (get_option('aio_use_javascript_redirect') == "disabled" || get_option('aio_use_javascript_redirect') == "") {
+                            echo "checked";
+                        } ?>/>Disabled
+                    </td>
+                    <td>
+                        <i>
+                            Uses Javscript redirect instead of the builtin wordpress one. 
                         </i>
                     </td>
                 </tr>
