@@ -14,7 +14,7 @@
     ?>
      <table class="widefat fixed" cellspacing="0">
         <tr class="">
-            <th scope="col" class="manage-column column-columnname"><strong>Employee: </strong></th>
+            <th scope="col" class="manage-column column-columnname"><strong><?php _e('Employee:'); ?> </strong></th>
             <td>
                 <?php 
                     if ($employee_id != null){
@@ -34,14 +34,14 @@
             </td>
         </tr>
         <tr class="alternate">
-            <th scope="col" class="manage-column column-columnname"><strong>Clock In: </strong></th>
+            <th scope="col" class="manage-column column-columnname"><strong><?php _e('Clock In:'); ?> </strong></th>
             <td>
                 <?php 
                     if ($clock_in != null){
                         echo $clock_in; 
                     }
                     else{
-                        echo 'Blank';
+                        _e('Blank');
                     }
                 ?>
             </td>
@@ -51,14 +51,14 @@
             </td>
         </tr>
         <tr class="">
-            <th scope="col" class="manage-column column-columnname"><strong>Clock Out: </strong></th>
+            <th scope="col" class="manage-column column-columnname"><strong><?php _e('Clock Out:'); ?> </strong></th>
             <td>
                 <?php 
                     if ($clock_out != null){
                         echo $clock_out; 
                     }
                     else{
-                        echo 'Blank';
+                        _e('Blank');
                     }
                 ?>
             </td>
@@ -68,7 +68,7 @@
             </td>
         </tr>
         <tr class="alternate">
-                <th scope="col" class="manage-column column-columnname"><strong>Total Shift Time: </strong></th>
+                <th scope="col" class="manage-column column-columnname"><strong><?php _e('Total Shift Time:'); ?> </strong></th>
             <td>
                 <?php echo aioGetShiftTotal($post->ID); ?>
             </td>

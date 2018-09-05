@@ -1,0 +1,231 @@
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: All in One Time Clock Lite - A Wordpress Employee Time "
+"Tracking Plugin\n"
+"POT-Creation-Date: 2018-09-05 11:55-0400\n"
+"PO-Revision-Date: 2018-09-05 16:05-0400\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.1.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: aio-time-clock-lite.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Last-Translator: \n"
+"Language: it\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: aio-reports.php:20
+msgid "Date Range"
+msgstr "Intervallo di date"
+
+#: aio-reports.php:26
+msgid "Report Wizard"
+msgstr "Creazione guidata report"
+
+#: aio-settings.php:6
+#, fuzzy
+msgid "Keeping track of time was never easier"
+msgstr "Tenere traccia del tempo non è mai stato facile"
+
+#: aio-settings.php:19
+msgid "General Settings"
+msgstr "Impostazioni generali"
+
+#: aio-settings.php:25
+msgid "Help"
+msgstr "Aiuto"
+
+#: aio-settings.php:31
+msgid "Get Pro"
+msgstr "Ottieni Pro"
+
+#: aio-time-clock-lite.php:277
+msgctxt "post type general name"
+msgid "Shifts"
+msgstr "Lavoro a turni"
+
+#: aio-time-clock-lite.php:278
+msgctxt "post type singular name"
+msgid "Shift"
+msgstr "Turno"
+
+#: aio-time-clock-lite.php:279
+msgctxt "book"
+msgid "Add New"
+msgstr "Aggiungi Nuovo"
+
+#: aio-time-clock-lite.php:280
+#, fuzzy
+msgid "Clock Out"
+msgstr "Clock out"
+
+#: aio-time-clock-lite.php:281
+#, fuzzy
+msgid "Edit Shift"
+msgstr "Modifica MAIUSC"
+
+#: aio-time-clock-lite.php:282
+#, fuzzy
+msgid "Clock In"
+msgstr "Orologio in"
+
+#: aio-time-clock-lite.php:283
+msgid "All Shifts"
+msgstr "Tutti i turni"
+
+#: aio-time-clock-lite.php:284
+#, fuzzy
+msgid "View Shift"
+msgstr "Visualizza MAIUSC"
+
+#: aio-time-clock-lite.php:285
+#, fuzzy
+msgid "Search Shifts"
+msgstr "Cerca turni"
+
+#: aio-time-clock-lite.php:286
+#, fuzzy
+msgid "No shifts found"
+msgstr "Nessun cambiamento trovato"
+
+#: aio-time-clock-lite.php:287
+#, fuzzy
+msgid "No shifts found in the Trash"
+msgstr "Nessun cambiamento trovato nel cestino"
+
+#: aio-time-clock-lite.php:310
+msgid "Manager"
+msgstr "Manager"
+
+#: aio-time-clock-lite.php:324
+msgid "Volunteer"
+msgstr "Volontario"
+
+#: aio-time-clock-lite.php:333 aio-time-clock-lite.php:372
+msgid "Employee"
+msgstr "Dipendente"
+
+#: aio-time-clock-lite.php:342
+#, fuzzy
+msgid "Time Clock Admin"
+msgstr "Time Clock admin"
+
+#: aio-time-clock-lite.php:373 aio-time-clock-lite.php:736
+#: aio-time-clock-lite.php:809
+msgid "Department"
+msgstr "Dipartimento"
+
+#: aio-time-clock-lite.php:374
+msgid "Clock In Time"
+msgstr "Sono presente in servizio"
+
+#: aio-time-clock-lite.php:375
+#, fuzzy
+msgid "Clock Out Time"
+msgstr "Tempo di clock out"
+
+#: aio-time-clock-lite.php:376
+msgid "Total Time"
+msgstr "Tempo Totale"
+
+#: aio-time-clock-lite.php:461
+#, fuzzy
+msgid "Shift Info"
+msgstr "Shift info"
+
+#: aio-time-clock-lite.php:735 aio-time-clock-lite.php:737
+msgid "Departments"
+msgstr "Settori"
+
+#: aio-time-clock-lite.php:738
+msgid "Search Departments"
+msgstr "Cerca Dipartimenti"
+
+#: aio-time-clock-lite.php:739
+#, fuzzy
+msgid "Popular Departments"
+msgstr "Reparti popolari"
+
+#: aio-time-clock-lite.php:740
+msgid "All Departments"
+msgstr "I Migliori Brand"
+
+#: aio-time-clock-lite.php:741
+msgid "Edit Department"
+msgstr "Modifica categoria"
+
+#: aio-time-clock-lite.php:742
+msgid "Update Department"
+msgstr "Aggiorna Dipartimento"
+
+#: aio-time-clock-lite.php:743
+msgid "Add New Department"
+msgstr "Aggiungi un nuovo Dipartimento"
+
+#: aio-time-clock-lite.php:744
+#, fuzzy
+msgid "New Department Name"
+msgstr "Nuovo nome del reparto"
+
+#: aio-time-clock-lite.php:745
+#, fuzzy
+msgid "Separate Departments with commas"
+msgstr "Dipartimenti separati con virgole"
+
+#: aio-time-clock-lite.php:746
+#, fuzzy
+msgid "Add or remove Departments"
+msgstr "Aggiungere o rimuovere reparti"
+
+#: aio-time-clock-lite.php:747
+#, fuzzy
+msgid "Choose from the most popular Departments"
+msgstr "Scegli tra i reparti più popolari"
+
+#: aio-time-clock-lite.php:778
+msgid "Users"
+msgstr "Utenti"
+
+#: aio-time-clock-lite.php:812
+msgid "Select Department"
+msgstr "Scegli Area di Intervento"
+
+#: aio-time-clock-lite.php:824
+#, fuzzy
+msgid "There are no departments available."
+msgstr "Non ci sono reparti disponibili."
+
+#. Plugin Name of the plugin/theme
+#, fuzzy
+msgid "All in One Time Clock Lite - A Wordpress Employee Time Tracking Plugin"
+msgstr ""
+"Tutto in un tempo di clock Lite-un Wordpress dipendente tempo Tracking "
+"plugin"
+
+#. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
+#, fuzzy
+msgid "https://codebangers.com"
+msgstr "https://codebangers.com"
+
+#. Description of the plugin/theme
+#, fuzzy
+msgid ""
+"Employees can easily clock in and out.  Managers can easily keep track of "
+"employees and their time."
+msgstr ""
+"I dipendenti possono facilmente orologio dentro e fuori.  I gestori possono "
+"facilmente tenere traccia dei dipendenti e il loro tempo."
+
+#. Author of the plugin/theme
+#, fuzzy
+msgid "Codebangers"
+msgstr "Codebangers"

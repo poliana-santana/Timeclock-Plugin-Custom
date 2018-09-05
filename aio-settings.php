@@ -36,7 +36,7 @@
         if (get_option('permalink_structure')) {
             //echo 'Permalinks enabled';
         } else {
-            echo '<div id="setting-error-settings_updated" class="updated settings-error">WARNING!! Permalinks have to be set to anything other than default for the Timeclock to work properly.  We recommend you user the Post Name setting. <br /><a class="button" href="' . get_site_url() . '/wp-admin/options-permalink.php">Configure Permalinks</a></div>';
+            _e('<div id="setting-error-settings_updated" class="updated settings-error">WARNING!! Permalinks have to be set to anything other than default for the Timeclock to work properly.  We recommend you user the Post Name setting. <br /><a class="button" href="' . get_site_url() . '/wp-admin/options-permalink.php">Configure Permalinks</a></div>');
         }
         if ($_GET['job'] == "create_timeclock_page") {
             $tc_page = aio_check_tc_shortcode_lite();
@@ -54,25 +54,25 @@
             }
             echo '<div id="setting-error-settings_updated" class="updated settings-error">';
             if ($new_post_id != null) {
-                echo 'TimeClock Page Created Sucessfully<br />';
-                echo '<a href="' . get_permalink($new_post_id) . '" class="button small_button" target="_blank"><i class="dashicons dashicons-search"></i> View Page</a>';
+                _e('TimeClock Page Created Sucessfully<br />');
+                _e('<a href="' . get_permalink($new_post_id) . '" class="button small_button" target="_blank"><i class="dashicons dashicons-search"></i> View Page</a>');
             } else {
-                echo 'Something went wrong.  Timeclock was not created successfully. ';
+                _e('Something went wrong.  Timeclock was not created successfully.');
                 if ($tc_page != null) {
-                    echo 'You already have a TimeClock page created.<br />';
-                    echo '<a href="' . get_permalink($tc_page) . '" class="button small_button" target="_blank"><i class="dashicons dashicons-search"></i> View Page</a>';
+                    _e('You already have a TimeClock page created.<br />');
+                    _e('<a href="' . get_permalink($tc_page) . '" class="button small_button" target="_blank"><i class="dashicons dashicons-search"></i> View Page</a>');
                 }
             }
             echo '</div>';
         }
         if ($_GET['job'] == "create_eprofile_page") {
-            $eprofile_page = check_eprofile_shortcode();
+            $eprofile_page = check_eprofile_shortcode_lite();
             if ($eprofile_page == null) {
                 $my_post = array(
                     'post_type' => 'page',
                     'post_title' => 'Employee Profile',
                     'post_status' => 'publish',
-                    'post_content' => '[show_aio_employee_profile]',
+                    'post_content' => '[show_aio_employee_profile_lite]',
                     'comment_status' => 'closed',
                     'post_author' => 1
                 );
@@ -81,18 +81,18 @@
             }
             echo '<div id="setting-error-settings_updated" class="updated settings-error">';
             if ($new_eprofile_id != null) {
-                echo 'Employee Profile Page Created Sucessfully<br />';
-                echo '<a href="' . get_permalink($new_eprofile_id) . '" class="button small_button" target="_blank"><i class="dashicons dashicons-search"></i> View Page</a>';
+                _e('Employee Profile Page Created Sucessfully<br />');
+                _e('<a href="' . get_permalink($new_eprofile_id) . '" class="button small_button" target="_blank"><i class="dashicons dashicons-search"></i> View Page</a>');
             } else {
                 echo 'Something went wrong.  Employee Profile Page was not created successfully. ';
                 if ($eprofile_page != null) {
-                    echo 'You already have a Employee Profile page created.<br />';
-                    echo '<a href="' . get_permalink($eprofile_page) . '" class="button small_button" target="_blank"><i class="dashicons dashicons-search"></i> View Page</a>';
+                    _e('You already have a Employee Profile page created.<br />');
+                    _e('<a href="' . get_permalink($eprofile_page) . '" class="button small_button" target="_blank"><i class="dashicons dashicons-search"></i> View Page</a>');
                 }
             }
             echo '</div>';
         }
-        ?><h3>General Settings</h3>
+        ?><h3><?php _e('General Settings'); ?></h3>
         <form method="post" action="options.php">
             <?php settings_fields('nertworks-timeclock-settings-group'); ?>
 
@@ -101,74 +101,82 @@
             ?>
             <table class="widefat fixed" cellspacing="0">
                 <tr class="alternate">
-                    <th scope="col" class="manage-column column-columnname"><strong>Company Name: </strong></th>
+                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('Company Name:'); ?> </strong></th>
                     <td>
                         <input type="text" name="aio_company_name" value="<?php echo get_option('aio_company_name'); ?>"
                                placeholder="My Company Name"/>
                     </td>
                     <td>
-                        <i>The company name associated with this Account</i>
+                        <i><?php _e('The company name associated with this Account'); ?></i>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="col" class="manage-column column-columnname"><strong>Enable Employee Wage Management: </strong></th>
+                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('Enable Employee Wage Management:'); ?> </strong></th>
                     <td>
                         <input type="radio" name="aio_wage_manage"
                                value="enabled" <?php if (get_option('aio_wage_manage') == "enabled") {
                             echo "checked";
-                        } ?> />Enabled
+                        } ?> /><?php _e('Enabled'); ?>
                         <input type="radio" name="aio_wage_manage"
                                value="disabled" <?php if (get_option('aio_wage_manage') == "disabled" || get_option('aio_wage_manage') == "") {
                             echo "checked";
-                        } ?>/>Disabled
+                        } ?>/><?php _e('Disabled'); ?>
                     </td>
                     <td>
-                        <i>This allows you to track wages as well as time. Making your reports and graphs much more
-                            valuable</i>
+                        <i><?php _e('This allows you to track wages as well as time. Making your reports and graphs much more
+                            valuable'); ?></i>
                     </td>
                 </tr>
                 <tr class="alternate">
-                    <th scope="col" class="manage-column column-columnname"><strong>TimeClock: </strong></th>
+                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('TimeClock:'); ?> </strong></th>
                     <td>
                         <?php
                         $tc_page = aio_check_tc_shortcode_lite();
                         if ($tc_page != null) {
-                            echo '<a href="' . get_permalink($tc_page) . '" class="button small_button" target="_blank"><i class="dashicons dashicons-search"></i> View Page</a>';
-                            echo '<a href="/wp-admin/post.php?post=' . $tc_page . '&action=edit" class="button small_button" target="_blank"><i class="dashicons dashicons-edit"></i> Edit Page</a>';
+                            _e('<a href="' . get_permalink($tc_page) . '" class="button small_button" target="_blank"><i class="dashicons dashicons-search"></i> View Page</a>');
+                            _e('<a href="/wp-admin/post.php?post=' . $tc_page . '&action=edit" class="button small_button" target="_blank"><i class="dashicons dashicons-edit"></i> Edit Page</a>');
                         } else {
-                            echo 'Timeclock page not found. Create one? <a href="?page=aio-tc-lite&tab=general_settings&job=create_timeclock_page" class="button small_button vmiddle"><span class="dashicons dashicons-plus"></span></a>';
+                            _e('Timeclock page not found. Create one? <a href="?page=aio-tc-lite&tab=general_settings&job=create_timeclock_page" class="button small_button vmiddle"><span class="dashicons dashicons-plus"></span></a>');
                         }
                         ?>
                     </td>
                     <td>
-                        <i>Where employees can clock in and out of their shifts.</i>
+                        <i><?php _e('Where employees can clock in and out of their shifts.'); ?></i>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="col" class="manage-column column-columnname"><strong>Employee Profile: </strong></th>
+                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('Employee Profile:');?> </strong></th>
                     <td>
-                        Available in <a href="https://codebangers.com/product/all-in-one-time-clock/" target="_blank">Pro</a>
+                        <?php
+                        $eprofile_page = check_eprofile_shortcode_lite();
+                        if ($eprofile_page != null) {
+                            echo '<a href="' . get_permalink($eprofile_page) . '" class="button small_button" target="_blank"><i class="dashicons dashicons-search"></i> View Page</a>';
+                            echo '<a href="/wp-admin/post.php?post=' . $eprofile_page . '&action=edit" class="button small_button" target="_blank"><i class="dashicons dashicons-edit"></i> Edit Page</a>';
+                        } else {
+                            _e('Employee Profile page not found. Create one? <a href="?page=aio-tc-lite&tab=general_settings&job=create_eprofile_page" class="button small_button">+</a>');
+                        }
+                        ?>
                     </td>
                     <td>
-                        <i>Profile where employees can access their shifts.</i>
+                        <i>Profile where employees can access their shifts.  Shortcode: [show_aio_employee_profile]</i>
                     </td>
                 </tr>
                 <tr class="alternate">
-                    <th scope="col" class="manage-column column-columnname"><strong>Redirect Employees to Time Clock Page: </strong></th>
+                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('Redirect Employees to Time Clock Page:'); ?> </strong></th>
                     <td>
                         <input type="radio" name="aio_timeclock_redirect_employees"
                                value="enabled" <?php if (get_option('aio_timeclock_redirect_employees') == "enabled") {
                             echo "checked";
-                        } ?> />Enabled
+                        } ?> /><?php _e('Enabled'); ?>
                         <input type="radio" name="aio_timeclock_redirect_employees"
                                value="disabled" <?php if (get_option('aio_timeclock_redirect_employees') == "disabled" || get_option('aio_timeclock_redirect_employees') == "") {
                             echo "checked";
-                        } ?>/>Disabled
+                        } ?>/><?php _e('Disabled'); ?>
                     </td>
                     <td>
                         <i>
-                            If a user with the role 'Employee' logs in. They will be redirected to the time clock
-                            page. 
+                            <?php _e('If a user with the role \'Employee\' logs in. They will be redirected to the time clock
+                            page. '); ?>
                         </i>
                     </td>
                 </tr>            
@@ -179,30 +187,30 @@
                     </td>
                     <td>
                         <i>
-                            When enabled, avatar will display on time clock page
+                            <?php _e('When enabled, avatar will display on time clock page'); ?>
                         </i>
                     </td>
                 </tr>
                 <tr class="alternate">
-                    <th scope="col" class="manage-column column-columnname"><strong>Current Department On Reports: </strong></th>
+                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('Current Department On Reports:'); ?> </strong></th>
                     <td>
                         <input type="radio" name="aio_timeclock_show_current_dept"
                                value="enabled" <?php if (get_option('aio_timeclock_show_current_dept') == "enabled") {
                             echo "checked";
-                        } ?> />Enabled
+                        } ?> /><?php _e('Enabled'); ?>
                         <input type="radio" name="aio_timeclock_show_current_dept"
                                value="disabled" <?php if (get_option('aio_timeclock_show_current_dept') == "disabled" || get_option('aio_timeclock_show_current_dept') == "") {
                             echo "checked";
-                        } ?>/>Disabled
+                        } ?>/><?php _e('Disabled'); ?>
                     </td>
                     <td>
                         <i>
-                            Shows the current department of the employee on the reports instead of the department recorded on the shift.
+                            <?php _e('Shows the current department of the employee on the reports instead of the department recorded on the shift.'); ?>
                         </i>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="col" class="manage-column column-columnname"><strong>TimeZone: </strong></th>
+                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('TimeZone:'); ?> </strong></th>
                     <td>
                         <select name="aio_timeclock_time_zone">
                             <?php
@@ -219,73 +227,56 @@
                     </td>
                     <td>
                         <i>
-                            This allows you to track wages as well as time. Making your reports and graphs much more
-                            valuable
+                            <?php _e('This allows you to track wages as well as time. Making your reports and graphs much more
+                            valuable'); ?>
                         </i>
                     </td>
                 </tr>
                 <tr class="alternate">
                     <th scope="col" class="manage-column column-columnname"><strong>Enable Location: </strong></th>
                     <td>
-                        Available in <a href="https://codebangers.com/product/all-in-one-time-clock/" target="_blank">Pro</a>
+                        <?php _e('Available in <a href="https://codebangers.com/product/all-in-one-time-clock/" target="_blank">Pro</a>'); ?>
                     </td>
                     <td>
                         <i>
-                            When enabled, employees can select the location they are clocking in at.
+                            <?php _e('When enabled, employees can select the location they are clocking in at.'); ?>
                         </i>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="col" class="manage-column column-columnname"><strong>Use Javascript Redirect: </strong></th>
+                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('Use Javascript Redirect:'); ?> </strong></th>
                     <td>
                         <input type="radio" name="aio_use_javascript_redirect"
                                value="enabled" <?php if (get_option('aio_use_javascript_redirect') == "enabled") {
                             echo "checked";
-                        } ?> />Enabled
+                        } ?> /><?php _e('Enabled'); ?>
                         <input type="radio" name="aio_use_javascript_redirect"
                                value="disabled" <?php if (get_option('aio_use_javascript_redirect') == "disabled" || get_option('aio_use_javascript_redirect') == "") {
                             echo "checked";
-                        } ?>/>Disabled
+                        } ?>/><?php _e('Disabled'); ?>
                     </td>
                     <td>
                         <i>
-                            Uses Javscript redirect instead of the builtin wordpress one. 
+                            <?php _e('Uses Javscript redirect instead of the builtin wordpress one. '); ?>
                         </i>
                     </td>
                 </tr>
-                <?php 
-                if (is_plugin_active('aio-time-clock-shift-notes/aio-time-clock-shift-notes.php')) {
-                ?>
-                <tr class="alternate">
-                    <th scope="col" class="manage-column column-columnname"><strong>Show Shift Notes on Report Page: </strong></th>
-                    <td>
-                        Available in <a href="https://codebangers.com/product/all-in-one-time-clock/" target="_blank">Pro</a>
-                    </td>
-                    <td>
-                        <i>
-                            Adds a column on the reports page for the shift notes
-                        </i>
-                    </td>
-                </tr>
-                <?php 
-                }
-                ?>
             </table>
             <?php submit_button(); ?>
         </form>
         <?php
     }
     if ($tab == "help") {
-        echo '<h2>Need Help?</h2>';
+        _e('<h2>Need Help?</h2>');
         $sad_puppy = plugins_url('/images/sadpuppy.jpg', __FILE__);
         echo '<img src="' . $sad_puppy . '" width="200"><br />';
-        echo '<p>Visit this link and we\'ll get you on your way. <a href="https://codebangers.com/support/">Get Support</a></p>';
+        _e('<p>Visit this link and we\'ll get you on your way. <a href="https://codebangers.com/support/">Get Support</a></p>');
     }
     if ($tab == "get_pro") {
         echo '<div class="proDiv">';
         echo '<h2>AIO Time Clock Pro</h2>';        
         echo '<hr>';
-        echo '<h4>Some Pro Features Include:</h4>
+        _e('<h4>Some Pro Features Include:</h4>
         <ul>
         <li>Custom Weekly and Monthly shift reports</li>        
         <li>Export Reports to Spreadsheet/CSV</li>
@@ -297,9 +288,9 @@
         <li>Extensions/Addons Supported</li>
         <li>And much much more</li>
         </ul>
-        ';
+        ');
 
-        echo '<p><a class="button-primary" href="https://codebangers.com/product/all-in-one-time-clock/">Learn More about Pro</a></p>';
+        _e('<p><a class="button-primary" href="https://codebangers.com/product/all-in-one-time-clock/">Learn More about Pro</a></p>');
         echo '</div>';
     }
     ?>

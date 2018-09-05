@@ -55,3 +55,6 @@ Employees can easily clock in and out.  Managers can easily keep track of employ
 2018.09.05 - Version 1.0.2
 
 	1. Added language packs
+2018.09.05 - Version 1.0.4
+
+	1. Added more translations and employee profile

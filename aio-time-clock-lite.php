@@ -5,10 +5,11 @@
  * Description: Employees can easily clock in and out.  Managers can easily keep track of employees and their time.
  * Author:      Codebangers
  * Author URI:  https://codebangers.com
- * Version:     1.0.3
+ * Version:     1.0.4
  */
 
 add_shortcode('show_aio_time_clock_lite', 'show_aio_time_clock_lite');
+add_shortcode('show_aio_employee_profile_lite', 'show_aio_employee_profile_lite');
 add_action('wp_ajax_aio_time_clock_js', 'aio_time_clock_js');
 add_action('wp_ajax_nopriv_aio_time_clock_js', 'aio_time_clock_js');
 add_action('wp_ajax_aio_time_clock_admin_js', 'aio_time_clock_admin_js');
@@ -70,6 +71,14 @@ function show_aio_time_clock_lite($atts)
     $nonce = wp_create_nonce("clock_in_nonce");
     $link = admin_url('admin-ajax.php?action=clock_in_nonce&post_id=' . get_the_ID() . '&nonce=' . $nonce);
     require_once "templates/time-clock-style1.php";
+}
+
+function show_aio_employee_profile_lite($atts)
+{
+    $ep_page = check_eprofile_shortcode_lite();
+    $nonce = wp_create_nonce("clock_in_nonce");
+    $link = admin_url('admin-ajax.php?action=clock_in_nonce&post_id=' . get_the_ID() . '&nonce=' . $nonce);
+    require_once "aio-employee-profile.php";
 }
 
 function aio_timeclock_plugin_admin_menu()
@@ -565,6 +574,20 @@ function aio_check_tc_shortcode_lite()
     wp_reset_query();
 }
 
+function check_eprofile_shortcode_lite()
+{
+    $loop = new WP_Query(array('post_type' => 'page', 'posts_per_page' => -1));
+    while ($loop->have_posts()) : $loop->the_post();
+        $content = get_the_content();
+        if (has_shortcode($content, 'show_aio_employee_profile_lite')) {
+            return $loop->post->ID;
+        } else {
+            //echo "none";
+        }
+    endwhile;
+    wp_reset_query();
+}
+
 function aio_member_login_redirect($redirect_to, $request, $user)
 {
     $tc_page = aio_check_tc_shortcode_lite();
@@ -678,7 +701,7 @@ function aioGetShiftTotalFromRange($employee, $date_range_start, $date_range_end
             } else {
                 $shift_sum = '00:00:00';
             }
-            $shift_total_time = aio_sum_the_time($shift_total_time, $shift_sum);
+            $shift_total_time = aio_sum_the_time_lite($shift_total_time, $shift_sum);
             array_push($shift_array,
                 array(
                     "shift_id" => $shift_id,
@@ -701,7 +724,7 @@ function aioGetShiftTotalFromRange($employee, $date_range_start, $date_range_end
     );
 }
 
-function aio_sum_the_time($time1, $time2)
+function aio_sum_the_time_lite($time1, $time2)
 {
     $times = array($time1, $time2);
     $seconds = 0;

@@ -11,33 +11,33 @@
     <table class="widefat fixed aio_datatable display" cellspacing="0">
         <thead>
             <tr>
-                <th class="manage-column column-columnname" scope="col"><strong>Employee Name</strong></th>
-                <th class="manage-column column-columnname" scope="col"><strong>Department</strong></th>
-                <th class="manage-column column-columnname" scope="col"><strong>Clock In Time</strong></th>
+                <th class="manage-column column-columnname" scope="col"><strong><?php _e('Employee Name'); ?></strong></th>
+                <th class="manage-column column-columnname" scope="col"><strong><?php _e('Department'); ?></strong></th>
+                <th class="manage-column column-columnname" scope="col"><strong><?php _e('Clock In Time'); ?></strong></th>
                 <?php 
                     if (get_option("aio_timeclock_show_shift_notes") == "enabled"){
-                        echo '<th id="columnname" class="manage-column column-columnname" scope="col"><strong>Shift Note</strong></th>';
+                        echo '<th id="columnname" class="manage-column column-columnname" scope="col"><strong>'.__( 'Shift Note' ).'</strong></th>';
                     }
                 ?>
                 <?php do_action("aio_new_report_column_heading"); ?>
-                <th class="manage-column column-columnname" scope="col"><strong>Status</strong></th>
-                <th class="manage-column column-columnname" scope="col"><strong>Options</strong></th>
+                <th class="manage-column column-columnname" scope="col"><strong><?php _e('Status'); ?></strong></th>
+                <th class="manage-column column-columnname" scope="col"><strong><?php _e('Options'); ?></strong></th>
             </tr>
             
         </thead>
         <tfoot>
             <tr>
-                <th class="manage-column column-columnname" scope="col"><strong>Employee Name</strong></th>
-                <th class="manage-column column-columnname" scope="col"><strong>Department</strong></th>
-                <th class="manage-column column-columnname" scope="col"><strong>Clock In Time</strong></th>
+                <th class="manage-column column-columnname" scope="col"><strong><?php _e('Employee Name'); ?></strong></th>
+                <th class="manage-column column-columnname" scope="col"><strong><?php _e('Department'); ?></strong></th>
+                <th class="manage-column column-columnname" scope="col"><strong><?php _e('Clock In Time'); ?></strong></th>
                 <?php 
                     if (get_option("aio_timeclock_show_shift_notes") == "enabled"){
                         echo '<th id="columnname" class="manage-column column-columnname" scope="col"><strong>Shift Note</strong></th>';
                     }
                 ?>
                 <?php do_action("aio_new_report_column_heading"); ?>
-                <th class="manage-column column-columnname" scope="col"><strong>Status</strong></th>
-                <th class="manage-column column-columnname" scope="col"><strong>Options</strong></th>
+                <th class="manage-column column-columnname" scope="col"><strong><?php _e('Status'); ?></strong></th>
+                <th class="manage-column column-columnname" scope="col"><strong><?php _e('Options'); ?></strong></th>
             </tr>
             
         </tfoot>
@@ -96,7 +96,7 @@
                 ?>
                 <?php do_action("aio_new_report_column"); ?>
                 <td>
-                    <span style="background-color: #FFFF00"><strong>Currently Working</strong></span>
+                    <span style="background-color: #FFFF00"><strong><?php _e('Currently Working'); ?></strong></span>
                 </td>
                 <td>
                     <a href="post.php?post=<?php echo $loop->post->ID; ?>&action=edit" class="button" title="Edit Shift"><span class="dashicons dashicons-admin-generic vmiddle"></span></a>
@@ -112,7 +112,7 @@
     </table>
     <div class="totalRowDiv">
         <hr>
-        <strong>Total Clocked In: </strong><?php echo "" . $count . ""; ?>
+        <strong><?php _e('Total Clocked In:'); ?> </strong><?php echo "" . $count . ""; ?>
         <hr>
     </div>
 </div>
