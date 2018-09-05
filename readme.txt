@@ -52,3 +52,6 @@ Employees can easily clock in and out.  Managers can easily keep track of employ
 2018.08.30 - Version 1.0.2
 
 	1. Added Time Clock Admin and redirect options	
+2018.09.05 - Version 1.0.2
+
+	1. Added language packs

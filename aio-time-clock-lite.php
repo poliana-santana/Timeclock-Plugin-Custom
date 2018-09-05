@@ -5,7 +5,7 @@
  * Description: Employees can easily clock in and out.  Managers can easily keep track of employees and their time.
  * Author:      Codebangers
  * Author URI:  https://codebangers.com
- * Version:     1.0.2
+ * Version:     1.0.3
  */
 
 add_shortcode('show_aio_time_clock_lite', 'show_aio_time_clock_lite');
@@ -41,6 +41,12 @@ if (is_admin()) {
 
 if (get_option('aio_timeclock_redirect_employees') == "enabled") {
     add_filter('login_redirect', 'aio_member_login_redirect', 10, 3);
+}
+
+add_action('plugins_loaded', array(&$this,'aio_time_clock_plugin_lite_init')); 
+
+function aio_time_clock_plugin_lite_init() {
+	load_plugin_textdomain( 'aio-timeclock-lite', false, dirname(plugin_basename(__FILE__)).'/languages/' );
 }
 
 add_filter( 'post_row_actions', 'aio_remove_row_actions', 10, 1 );
