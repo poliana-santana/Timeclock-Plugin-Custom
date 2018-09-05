@@ -1,0 +1,209 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: All in One Time Clock Lite - A Wordpress Employee Time "
+"Tracking Plugin\n"
+"POT-Creation-Date: 2018-09-05 11:53-0400\n"
+"PO-Revision-Date: 2018-09-05 11:54-0400\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.1.1\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: aio-time-clock-lite.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: aio-reports.php:20
+msgid "Date Range"
+msgstr "Date Range"
+
+#: aio-reports.php:26
+msgid "Report Wizard"
+msgstr "Report Wizard"
+
+#: aio-settings.php:6
+msgid "Keeping track of time was never easier"
+msgstr "Keeping track of time was never easier"
+
+#: aio-settings.php:19
+msgid "General Settings"
+msgstr "General Settings"
+
+#: aio-settings.php:25
+msgid "Help"
+msgstr "Help"
+
+#: aio-settings.php:31
+msgid "Get Pro"
+msgstr "Get Pro"
+
+#: aio-time-clock-lite.php:277
+msgctxt "post type general name"
+msgid "Shifts"
+msgstr "Shifts"
+
+#: aio-time-clock-lite.php:278
+msgctxt "post type singular name"
+msgid "Shift"
+msgstr "Shift"
+
+#: aio-time-clock-lite.php:279
+msgctxt "book"
+msgid "Add New"
+msgstr "Add New"
+
+#: aio-time-clock-lite.php:280
+msgid "Clock Out"
+msgstr "Clock Out"
+
+#: aio-time-clock-lite.php:281
+msgid "Edit Shift"
+msgstr "Edit Shift"
+
+#: aio-time-clock-lite.php:282
+msgid "Clock In"
+msgstr "Clock In"
+
+#: aio-time-clock-lite.php:283
+msgid "All Shifts"
+msgstr "All Shifts"
+
+#: aio-time-clock-lite.php:284
+msgid "View Shift"
+msgstr "View Shift"
+
+#: aio-time-clock-lite.php:285
+msgid "Search Shifts"
+msgstr "Search Shifts"
+
+#: aio-time-clock-lite.php:286
+msgid "No shifts found"
+msgstr "No shifts found"
+
+#: aio-time-clock-lite.php:287
+msgid "No shifts found in the Trash"
+msgstr "No shifts found in the Trash"
+
+#: aio-time-clock-lite.php:310
+msgid "Manager"
+msgstr "Manager"
+
+#: aio-time-clock-lite.php:324
+msgid "Volunteer"
+msgstr "Volunteer"
+
+#: aio-time-clock-lite.php:333 aio-time-clock-lite.php:372
+msgid "Employee"
+msgstr "Employee"
+
+#: aio-time-clock-lite.php:342
+msgid "Time Clock Admin"
+msgstr "Time Clock Admin"
+
+#: aio-time-clock-lite.php:373 aio-time-clock-lite.php:736
+#: aio-time-clock-lite.php:809
+msgid "Department"
+msgstr "Department"
+
+#: aio-time-clock-lite.php:374
+msgid "Clock In Time"
+msgstr "Clock In Time"
+
+#: aio-time-clock-lite.php:375
+msgid "Clock Out Time"
+msgstr "Clock Out Time"
+
+#: aio-time-clock-lite.php:376
+msgid "Total Time"
+msgstr "Total Time"
+
+#: aio-time-clock-lite.php:461
+msgid "Shift Info"
+msgstr "Shift Info"
+
+#: aio-time-clock-lite.php:735 aio-time-clock-lite.php:737
+msgid "Departments"
+msgstr "Departments"
+
+#: aio-time-clock-lite.php:738
+msgid "Search Departments"
+msgstr "Search Departments"
+
+#: aio-time-clock-lite.php:739
+msgid "Popular Departments"
+msgstr "Popular Departments"
+
+#: aio-time-clock-lite.php:740
+msgid "All Departments"
+msgstr "All Departments"
+
+#: aio-time-clock-lite.php:741
+msgid "Edit Department"
+msgstr "Edit Department"
+
+#: aio-time-clock-lite.php:742
+msgid "Update Department"
+msgstr "Update Department"
+
+#: aio-time-clock-lite.php:743
+msgid "Add New Department"
+msgstr "Add New Department"
+
+#: aio-time-clock-lite.php:744
+msgid "New Department Name"
+msgstr "New Department Name"
+
+#: aio-time-clock-lite.php:745
+msgid "Separate Departments with commas"
+msgstr "Separate Departments with commas"
+
+#: aio-time-clock-lite.php:746
+msgid "Add or remove Departments"
+msgstr "Add or remove Departments"
+
+#: aio-time-clock-lite.php:747
+msgid "Choose from the most popular Departments"
+msgstr "Choose from the most popular Departments"
+
+#: aio-time-clock-lite.php:778
+msgid "Users"
+msgstr "Users"
+
+#: aio-time-clock-lite.php:812
+msgid "Select Department"
+msgstr "Select Department"
+
+#: aio-time-clock-lite.php:824
+msgid "There are no departments available."
+msgstr "There are no departments available."
+
+#. Plugin Name of the plugin/theme
+msgid "All in One Time Clock Lite - A Wordpress Employee Time Tracking Plugin"
+msgstr ""
+"All in One Time Clock Lite - A Wordpress Employee Time Tracking Plugin"
+
+#. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
+msgid "https://codebangers.com"
+msgstr "https://codebangers.com"
+
+#. Description of the plugin/theme
+msgid ""
+"Employees can easily clock in and out.  Managers can easily keep track of "
+"employees and their time."
+msgstr ""
+"Employees can easily clock in and out.  Managers can easily keep track of "
+"employees and their time."
+
+#. Author of the plugin/theme
+msgid "Codebangers"
+msgstr "Codebangers"
