@@ -213,8 +213,9 @@
                     <th scope="col" class="manage-column column-columnname"><strong><?php _e('TimeZone:'); ?> </strong></th>
                     <td>
                         <select name="aio_timeclock_time_zone">
+                            <option value="dynamic">Dynamic</option>
                             <?php
-                            $tzlist = aioGetTimeZoneList();
+                            $tzlist = aioGetTimeZoneListLite();
                             foreach ($tzlist as $tz => $label) {
                                 $select = '';
                                 if (get_option("aio_timeclock_time_zone") == $label) {

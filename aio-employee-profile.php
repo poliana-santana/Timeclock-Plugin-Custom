@@ -2,10 +2,17 @@
 global $wordpress;
 global $wpdb;
 global $current_user;
+$timeclock_button = null;
 if (is_user_logged_in() == true) {
     wp_get_current_user();
-    ?>
+    $tc_page = aio_check_tc_shortcode_lite();
+?>
 <table>
+<?php 
+if ($tc_page != null){
+    echo '<a class="button" href="'.get_permalink($tc_page).'">Back to Time Clock</a>';
+}
+?>
 <?php $loop = new WP_Query(array('post_type' => 'shift', 'author' => $current_user->ID, 'posts_per_page' => -1));?>
 <?php while ($loop->have_posts()): $loop->the_post();?>
 	    <?php

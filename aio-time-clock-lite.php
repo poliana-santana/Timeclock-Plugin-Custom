@@ -5,7 +5,7 @@
  * Description: Employees can easily clock in and out.  Managers can easily keep track of employees and their time.
  * Author:      Codebangers
  * Author URI:  https://codebangers.com
- * Version:     1.0.4
+ * Version:     1.0.5
  */
 
 add_shortcode('show_aio_time_clock_lite', 'show_aio_time_clock_lite');
@@ -171,6 +171,28 @@ function aio_time_clock_js()
             )
         );
     } elseif ($clock_action == "clock_in") {
+        $device_time = $_POST["device_time"];
+        $timezone_option = get_option('aio_timeclock_time_zone');
+        if ($timezone_option != null){
+            if ($device_time != null && $timezone_option == 'dynamic'){
+                $device_time = strtotime($device_time);
+                $date = date('Y/m/d h:i:s A',$device_time);
+                $time_type = "device";
+            }
+            else{
+                date_default_timezone_set($timezone_option);
+                $date = date('Y/m/d h:i:s A');
+                $time_type = "timezone option";
+            }
+                
+        }
+        else{
+            $timezone = 'America/New_York';
+            date_default_timezone_set($timezone);
+            $date = date('Y/m/d h:i:s A');
+            $time_type = "defualt";
+        }  
+            
         $aio_new_shift = array(
             'post_type' => 'shift',
             'post_title' => 'Employee Shift',
@@ -178,8 +200,6 @@ function aio_time_clock_js()
             'post_author' => $employee,
         );
         $new_post_id = wp_insert_post($aio_new_shift);
-        date_default_timezone_set(get_option("aio_timeclock_time_zone"));
-        $clock_in_date = date('Y/m/d h:i:s A');
         $department = "";
         $terms = get_the_terms($current_user->ID, 'department');
         if (!empty($terms)) {
@@ -187,7 +207,7 @@ function aio_time_clock_js()
                 $department = $term->name;
             }
         }
-        add_post_meta($new_post_id, 'employee_clock_in_time', $clock_in_date, true);
+        add_post_meta($new_post_id, 'employee_clock_in_time', $date, true);
         if ($department != null) {
             add_post_meta($new_post_id, 'department', $department, true);
         }
@@ -203,16 +223,35 @@ function aio_time_clock_js()
                 "open_shift_id" => $open_shift_id,
                 "clock_action" => $clock_action,
                 "is_clocked_in" => $is_clocked_in,
-                "employee_clock_in_time" => $clock_in_date,
+                "employee_clock_in_time" => $date,
                 "employee_clock_out_time" => null,
             )
         );
     } elseif ($clock_action == "clock_out") {
+        $device_time = $_POST["device_time"];
+        $timezone_option = get_option('aio_timeclock_time_zone');
+        if ($timezone_option != null){
+            if ($device_time != null && $timezone_option == 'dynamic'){
+                $device_time = strtotime($device_time);
+                $date = date('Y/m/d h:i:s A',$device_time);
+                $time_type = "device";
+            }
+            else{
+                date_default_timezone_set($timezone_option);
+                $date = date('Y/m/d h:i:s A');
+                $time_type = "timezone option";
+            }
+                
+        }
+        else{
+            $timezone = 'America/New_York';
+            date_default_timezone_set($timezone);
+            $date = date('Y/m/d h:i:s A');
+            $time_type = "defualt";
+        }  
         $is_clocked_in = false;  
-        date_default_timezone_set(get_option("aio_timeclock_time_zone"));
         $employee_clock_in_time = get_post_meta($open_shift_id, 'employee_clock_in_time', true);        
-        $employee_clock_out_time = date('Y/m/d h:i:s A');
-        add_post_meta($open_shift_id, 'employee_clock_out_time', $employee_clock_out_time, true);
+        add_post_meta($open_shift_id, 'employee_clock_out_time', $date, true);
         add_post_meta($open_shift_id, 'ip_address_out', $_SERVER['REMOTE_ADDR'], true);              
         $time_total = aio_date_difference_lite($employee_clock_out_time, $employee_clock_in_time);
 
@@ -223,7 +262,7 @@ function aio_time_clock_js()
                 "employee" => $employee,
                 "clock_action" => $clock_action,
                 "employee_clock_in_time" => $employee_clock_in_time,
-                "employee_clock_out_time" => $employee_clock_out_time,
+                "employee_clock_out_time" => $date,
                 "time_total" => $time_total,
                 "is_clocked_in" => $is_clocked_in
             )
@@ -599,7 +638,7 @@ function aio_member_login_redirect($redirect_to, $request, $user)
     }
 }
 
-function aioGetTimeZoneList()
+function aioGetTimeZoneListLite()
 {
     $tzlist = DateTimeZone::listIdentifiers(DateTimeZone::ALL);
     return $tzlist;

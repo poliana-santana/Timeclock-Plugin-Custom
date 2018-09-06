@@ -13,7 +13,7 @@
     $selected_employee = "";
     ?>
      <table class="widefat fixed" cellspacing="0">
-        <tr class="">
+        <tr class="alternate">
             <th scope="col" class="manage-column column-columnname"><strong><?php _e('Employee:'); ?> </strong></th>
             <td>
                 <?php 
@@ -31,6 +31,32 @@
                         aioGetEmployeeSelect($selected_employee);
                     ?>
                 </select>
+            </td>
+        </tr>
+        <tr class="">
+            <th scope="col" class="manage-column column-columnname"><strong><?php _e('IP Address:'); ?> </strong></th>
+            <td>
+                <strong>In: </strong>
+                <?php 
+                    if ($ip_address_in != null){
+                        echo $ip_address_in; 
+                    }
+                    else{
+                         _e('Blank');
+                    }
+                ?>
+                <br />
+                <strong>Out: </strong>
+                <?php 
+                    if ($ip_address_out != null){
+                        echo $ip_address_out; 
+                    }
+                    else{
+                        _e('Blank');
+                    }
+                ?>
+            </td>
+            <td>
             </td>
         </tr>
         <tr class="alternate">

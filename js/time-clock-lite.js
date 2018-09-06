@@ -50,6 +50,7 @@ jQuery(document).ready(function () {
   });
 
   jQuery("#aio_clock_button").click(function (e) {
+    var now = new Date();
     e.preventDefault();
     jQuery("#aio_clock_button").html('<div class="aio-spinner"></div>');
     employee = jQuery(this).attr("data-employee");
@@ -66,10 +67,11 @@ jQuery(document).ready(function () {
         clock_action: clock_action,
         open_shift_id: open_shift_id,
         employee: employee,
+        device_time: now.toLocaleString(),
         nonce: nonce
       },
       success: function (response) {
-        console.log(response);
+        //console.log(response);
         var open_shift_id = response["open_shift_id"];
         var is_clocked_in = response["is_clocked_in"];
         var new_clock_action = "";

@@ -49,12 +49,20 @@ Employees can easily clock in and out.  Managers can easily keep track of employ
 2018.06.09 - Version 1.0.1
 
 	1. Added real time monitoring
+
 2018.08.30 - Version 1.0.2
 
-	1. Added Time Clock Admin and redirect options	
+	1. Added Time Clock Admin and redirect options
+
 2018.09.05 - Version 1.0.2
 
 	1. Added language packs
+	
 2018.09.05 - Version 1.0.4
 
 	1. Added more translations and employee profile
+
+2018.09.06 - Version 1.0.5
+
+	1. Added ip address to individual shift page and real time monitoring.  
+	1. Added dynamic timezone to options
