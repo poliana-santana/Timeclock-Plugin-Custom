@@ -65,4 +65,8 @@ Employees can easily clock in and out.  Managers can easily keep track of employ
 2018.09.06 - Version 1.0.5
 
 	1. Added ip address to individual shift page and real time monitoring.  
-	1. Added dynamic timezone to options
+	2. Added dynamic timezone to options
+
+2018.09.10 - Version 1.0.6
+
+	1. fixed bug in language action
