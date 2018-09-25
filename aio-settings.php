@@ -101,7 +101,7 @@
             ?>
             <table class="widefat fixed" cellspacing="0">
                 <tr class="alternate">
-                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('Company Name:'); ?> </strong></th>
+                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('Company Name'); ?>: </strong></th>
                     <td>
                         <input type="text" name="aio_company_name" value="<?php echo get_option('aio_company_name'); ?>"
                                placeholder="My Company Name"/>
@@ -111,7 +111,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('Enable Employee Wage Management:'); ?> </strong></th>
+                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('Enable Employee Wage Management'); ?>: </strong></th>
                     <td>
                         <input type="radio" name="aio_wage_manage"
                                value="enabled" <?php if (get_option('aio_wage_manage') == "enabled") {
@@ -128,7 +128,7 @@
                     </td>
                 </tr>
                 <tr class="alternate">
-                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('TimeClock:'); ?> </strong></th>
+                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('TimeClock'); ?>: </strong></th>
                     <td>
                         <?php
                         $tc_page = aio_check_tc_shortcode_lite();
@@ -145,7 +145,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('Employee Profile:');?> </strong></th>
+                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('Employee Profile');?>: </strong></th>
                     <td>
                         <?php
                         $eprofile_page = check_eprofile_shortcode_lite();
@@ -162,7 +162,7 @@
                     </td>
                 </tr>
                 <tr class="alternate">
-                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('Redirect Employees to Time Clock Page:'); ?> </strong></th>
+                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('Redirect Employees to Time Clock Page'); ?>: </strong></th>
                     <td>
                         <input type="radio" name="aio_timeclock_redirect_employees"
                                value="enabled" <?php if (get_option('aio_timeclock_redirect_employees') == "enabled") {
@@ -192,7 +192,7 @@
                     </td>
                 </tr>
                 <tr class="alternate">
-                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('Current Department On Reports:'); ?> </strong></th>
+                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('Current Department On Reports'); ?>: </strong></th>
                     <td>
                         <input type="radio" name="aio_timeclock_show_current_dept"
                                value="enabled" <?php if (get_option('aio_timeclock_show_current_dept') == "enabled") {
@@ -210,7 +210,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('TimeZone:'); ?> </strong></th>
+                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('TimeZone'); ?>: </strong></th>
                     <td>
                         <select name="aio_timeclock_time_zone">
                             <option value="dynamic">Dynamic</option>
@@ -234,7 +234,7 @@
                     </td>
                 </tr>
                 <tr class="alternate">
-                    <th scope="col" class="manage-column column-columnname"><strong>Enable Location: </strong></th>
+                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('Enable Location'); ?>: </strong></th>
                     <td>
                         <?php _e('Available in <a href="https://codebangers.com/product/all-in-one-time-clock/" target="_blank">Pro</a>'); ?>
                     </td>
@@ -245,7 +245,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('Use Javascript Redirect:'); ?> </strong></th>
+                    <th scope="col" class="manage-column column-columnname"><strong><?php _e('Use Javascript Redirect'); ?>: </strong></th>
                     <td>
                         <input type="radio" name="aio_use_javascript_redirect"
                                value="enabled" <?php if (get_option('aio_use_javascript_redirect') == "enabled") {
@@ -259,6 +259,17 @@
                     <td>
                         <i>
                             <?php _e('Uses Javscript redirect instead of the builtin wordpress one. '); ?>
+                        </i>
+                    </td>
+                </tr>
+                <tr class="">
+                    <th scope="col" class="manage-column column-columnname"><strong>Custom Roles: </strong></th>
+                    <td>
+                        <?php _e('Available in <a href="https://codebangers.com/product/all-in-one-time-clock/" target="_blank">Pro</a>'); ?>
+                    </td>
+                    <td>
+                        <i>
+                            <?php _e('Add your own custom roles to have access to the time clock.'); ?>
                         </i>
                     </td>
                 </tr>
@@ -279,6 +290,7 @@
         echo '<hr>';
         _e('<h4>Some Pro Features Include:</h4>
         <ul>
+        <li>Add your own custom roles for time clock access</li>        
         <li>Custom Weekly and Monthly shift reports</li>        
         <li>Export Reports to Spreadsheet/CSV</li>
         <li>Manage Wages</li>        

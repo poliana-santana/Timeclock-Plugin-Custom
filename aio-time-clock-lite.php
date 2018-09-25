@@ -5,7 +5,7 @@
  * Description: Employees can easily clock in and out.  Managers can easily keep track of employees and their time.
  * Author:      Codebangers
  * Author URI:  https://codebangers.com
- * Version:     1.0.6
+ * Version:     1.0.7
  */
 
 add_shortcode('show_aio_time_clock_lite', 'show_aio_time_clock_lite');
@@ -18,7 +18,7 @@ add_action('admin_init', 'aio_tc_custom_post_shift_lite');
 add_action("admin_init", "aio_timeclock_admin_init_lite");
 add_action('add_meta_boxes', 'aio_shift_info_box_meta_lite');
 add_action('admin_menu', 'aio_remove_my_post_metaboxes_lite');
-add_action('admin_init', 'register_aio_timeclock_settings');
+add_action('admin_init', 'register_aio_timeclock_lite_settings');
 add_action('init', 'aio_tc_script_enqueuer_lite');
 add_action('admin_init', 'aio_admin_tc_script_enqueuer_lite');
 add_filter('user_contactmethods', 'aio_modify_employee_wage_lite');
@@ -37,7 +37,7 @@ if (is_admin()) {
 }
 
 if (is_admin()) {
-    add_action('admin_menu', 'aio_timeclock_plugin_admin_menu');
+    add_action('admin_menu', 'aio_timeclock_lite_plugin_admin_menu');
 }
 
 if (get_option('aio_timeclock_redirect_employees') == "enabled") {
@@ -81,17 +81,17 @@ function show_aio_employee_profile_lite($atts)
     require_once "aio-employee-profile.php";
 }
 
-function aio_timeclock_plugin_admin_menu()
+function aio_timeclock_lite_plugin_admin_menu()
 {
-    $page_hook_suffix = add_menu_page('Time Clock', 'Time Clock', 'edit_posts', 'aio-tc-lite', 'aio_timeclock_settings_page', 'dashicons-clock');
-    add_submenu_page('aio-tc-lite', 'General Settings', 'General Settings', 'edit_posts', 'aio-tc-lite', 'aio_timeclock_settings_page');
+    $page_hook_suffix = add_menu_page('Time Clock Lite', 'Time Clock Lite', 'edit_posts', 'aio-tc-lite', 'aio_timeclock_settings_page_lite', 'dashicons-clock');
+    add_submenu_page('aio-tc-lite', 'General Settings', 'General Settings', 'edit_posts', 'aio-tc-lite', 'aio_timeclock_settings_page_lite');
     add_submenu_page('aio-tc-lite', 'Real Time Monitoring', 'Real Time Monitoring', 'edit_posts', 'aio-monitoring-sub', 'aio_timeclock_monitoring_page');
-    add_submenu_page('aio-tc-lite', 'Employees', 'Employees', 'edit_posts', 'aio-employees-sub', 'aio_timeclock_employee_page');
+    add_submenu_page('aio-tc-lite', 'Employees', 'Employees', 'edit_posts', 'aio-employees-sub', 'aio_timeclock_lite_employee_page');
     add_submenu_page('aio-tc-lite', 'Departments', 'Departments', 'edit_posts', 'aio-department-sub', 'aio_timeclock_department_page');
     add_submenu_page('aio-tc-lite', 'Managers', 'Managers', 'edit_posts', 'aio-managers-sub', 'aio_timeclock_manager_page');
     add_submenu_page('aio-tc-lite', 'Admins', 'Admins', 'edit_posts', 'aio-managers-sub', 'aio_timeclock_tc_admin_page');
-    add_submenu_page('aio-tc-lite', 'Shifts', 'Shifts', 'edit_posts', 'aio-shifts-sub', 'aio_timeclock_shifts_page');
-    add_submenu_page('aio-tc-lite', 'Reports', 'Reports', 'edit_posts', 'aio-reports-sub', 'aio_timeclock_reports_page');
+    add_submenu_page('aio-tc-lite', 'Shifts', 'Shifts', 'edit_posts', 'aio-shifts-sub', 'aio_timeclock_lite_shifts_page');
+    add_submenu_page('aio-tc-lite', 'Reports', 'Reports', 'edit_posts', 'aio-reports-sub', 'aio_timeclock_reports_page_lite');
 }
 
 function aio_tc_script_enqueuer_lite()
@@ -436,7 +436,7 @@ function aio_timeclock_shift_column_lite($column, $post_id)
             echo $last_name . ", " . $first_name;
             break;
         case 'department':
-            echo aioDepartmentColumn(get_the_author_meta('ID'), $post_id);
+            echo aioLiteDepartmentColumn(get_the_author_meta('ID'), $post_id);
             break;
         case 'employee_clock_in_time':
             echo get_post_meta($post_id, 'employee_clock_in_time', true);
@@ -450,29 +450,18 @@ function aio_timeclock_shift_column_lite($column, $post_id)
     }
 }
 
-function aioDepartmentColumn($author_id, $p_id)
+function aioLiteDepartmentColumn($author_id, $p_id)
 {
-    $department = "none";
-
-    if (get_option("aio_timeclock_show_current_dept") == "enabled") {
-        $department_terms = get_the_terms($author_id, 'department');
-        if ($department_terms && !is_wp_error($department_terms)) {
-            foreach ($department_terms as $t) {
-                $temp_department .= $t->name;
-            }
-            if ($temp_department != null) {
-                $department = $temp_department;
-            }
-        } else {
-            $department = "Empty";
-        }
-
-    } else {
-        if (get_post_meta($p_id, 'department', true)) {
-            $department = get_post_meta($p_id, 'department', true);
-        } else {
-            $department = "Empty";
-        }
+    $department = "";    
+    if (get_option("aio_timeclock_show_current_dept") == "enabled"){
+        $user_groups = wp_get_object_terms($author_id, 'department', array('fields' => 'all_with_object_id'));  // Get user group detail
+        foreach($user_groups as $user_gro)
+        {
+            $department = $user_gro->name; // Get current user group name            
+        }        
+    }
+    else{
+        $department = get_post_meta($p_id, 'department', true);        
     }
 
     return $department;
@@ -570,7 +559,7 @@ function aio_remove_my_post_metaboxes_lite()
     remove_meta_box('authordiv', 'shift', 'normal');
 }
 
-function aio_timeclock_settings_page()
+function aio_timeclock_settings_page_lite()
 {
     include "aio-settings.php";
 }
@@ -580,12 +569,12 @@ function aio_timeclock_monitoring_page()
     include "aio-monitoring.php";
 }
 
-function aio_timeclock_reports_page()
+function aio_timeclock_reports_page_lite()
 {
     include "aio-reports.php";
 }
 
-function register_aio_timeclock_settings()
+function register_aio_timeclock_lite_settings()
 {
     register_setting('nertworks-timeclock-settings-group', 'aio_company_name');    
     register_setting('nertworks-timeclock-settings-group', 'aio_pay_schedule');
@@ -644,7 +633,7 @@ function aioGetTimeZoneListLite()
     return $tzlist;
 }
 
-function aio_timeclock_shifts_page()
+function aio_timeclock_lite_shifts_page()
 {    
     if (get_option("aio_use_javascript_redirect") == "enabled"){
         echo '<script>
@@ -657,7 +646,7 @@ function aio_timeclock_shifts_page()
     }
 }
 
-function aio_timeclock_employee_page()
+function aio_timeclock_lite_employee_page()
 {    
     if (get_option("aio_use_javascript_redirect") == "enabled"){
         echo '<script>

@@ -17,14 +17,16 @@ Employees can easily clock in and out.  Managers can easily keep track of employ
 
 = Features =
 1. Keep track of employee and volunteer shifts. 
-2. Generate reports.
+2. Generate custom reports.
 3. Manage employee departments and wages.
 4. Create and edit shifts.
 5. Supports all timezones.
+6. View employee activity in real time.
 
 = Pro Features =
-1. Custom Weekly and Monthly shift reports        
-2. Export Reports to Spreadsheet/CSV
+1. Add your own Custom Roles for Time Clock access
+2. Custom Weekly and Monthly shift reports        
+3. Export Reports to Spreadsheet/CSV
 4. Monthly/Yearly Charts
 5. Unlimited Clock in Locations
 6. Google Analytics    
@@ -70,3 +72,7 @@ Employees can easily clock in and out.  Managers can easily keep track of employ
 2018.09.10 - Version 1.0.6
 
 	1. fixed bug in language action
+
+2018.09.10 - Version 1.0.7
+
+	1. Fixed department bug

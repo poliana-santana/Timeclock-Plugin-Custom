@@ -15,11 +15,6 @@
                 <th class="manage-column column-columnname" scope="col"><strong><?php _e('Department'); ?></strong></th>
                 <th class="manage-column column-columnname" scope="col"><strong><?php _e('Clock In Time'); ?></strong></th>
                 <th class="manage-column column-columnname" scope="col"><strong><?php _e('IP Address'); ?></strong></th>
-                <?php 
-                    if (get_option("aio_timeclock_show_shift_notes") == "enabled"){
-                        echo '<th id="columnname" class="manage-column column-columnname" scope="col"><strong>'.__( 'Shift Note' ).'</strong></th>';
-                    }
-                ?>
                 <?php do_action("aio_new_report_column_heading"); ?>
                 <th class="manage-column column-columnname" scope="col"><strong><?php _e('Status'); ?></strong></th>
                 <th class="manage-column column-columnname" scope="col"><strong><?php _e('Options'); ?></strong></th>
@@ -31,11 +26,6 @@
                 <th class="manage-column column-columnname" scope="col"><strong><?php _e('Department'); ?></strong></th>
                 <th class="manage-column column-columnname" scope="col"><strong><?php _e('Clock In Time'); ?></strong></th>
                 <th class="manage-column column-columnname" scope="col"><strong><?php _e('IP Address'); ?></strong></th>
-                <?php 
-                    if (get_option("aio_timeclock_show_shift_notes") == "enabled"){
-                        echo '<th id="columnname" class="manage-column column-columnname" scope="col"><strong>Shift Note</strong></th>';
-                    }
-                ?>
                 <?php do_action("aio_new_report_column_heading"); ?>
                 <th class="manage-column column-columnname" scope="col"><strong><?php _e('Status'); ?></strong></th>
                 <th class="manage-column column-columnname" scope="col"><strong><?php _e('Options'); ?></strong></th>
@@ -51,8 +41,7 @@
             $custom = get_post_custom($loop->post->ID);
             $employee_clock_in_time = $custom["employee_clock_in_time"][0];
             $employee_clock_out_time = $custom["employee_clock_out_time"][0];
-            $ip_address_in = $custom["ip_address_in"][0];
-            $shift_note = $custom["shift_notes"][0];
+            $ip_address_in = $custom["ip_address_in"][0];            
             $location = $custom["location"][0];
             if ($location){
                 $location_name = get_the_title($location);
@@ -74,7 +63,7 @@
                 <td scope="row"><?php echo ucfirst($last_name) . ", " . ucfirst($first_name); ?></td>
                 <td scope="row">
                 <?php 
-                echo aioDepartmentColumn(get_the_author_meta( 'ID' ), $loop->post->ID);
+                echo aioLiteDepartmentColumn(get_the_author_meta( 'ID' ), $loop->post->ID);
                 ?>
                 </td>
 
@@ -93,12 +82,7 @@
                 </td>
                 <td>
                     <?php echo $ip_address_in; ?>
-                </td>
-                <?php 
-                    if (get_option("aio_timeclock_show_shift_notes") == "enabled"){
-                        echo '<td>'.$shift_note.'</td>';
-                    }
-                ?>
+                </td>                
                 <?php do_action("aio_new_report_column"); ?>
                 <td>
                     <span style="background-color: #FFFF00"><strong><?php _e('Currently Working'); ?></strong></span>
