@@ -39,7 +39,7 @@ echo '
     <option>'.__('Show All').'</option>';
 $users = get_users('fields=all_with_meta');
 usort($users, create_function('$a, $b', 'if($a->last_name == $b->last_name) { return 0;} return ($a->last_name > $b->last_name) ? 1 : -1;'));
-foreach (array_filter($users, 'aio_filter_roles') as $user) {
+foreach (array_filter($users, 'aio_filter_roles_lite') as $user) {
     echo '<option value="' . $user->ID . '">' . $user->user_lastname . ", " . $user->user_firstname . '</option>';
 }
 echo '</select>

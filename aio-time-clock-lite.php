@@ -5,7 +5,7 @@
  * Description: Employees can easily clock in and out.  Managers can easily keep track of employees and their time.
  * Author:      Codebangers
  * Author URI:  https://codebangers.com
- * Version:     1.0.7
+ * Version:     1.0.8
  */
 
 add_shortcode('show_aio_time_clock_lite', 'show_aio_time_clock_lite');
@@ -87,9 +87,7 @@ function aio_timeclock_lite_plugin_admin_menu()
     add_submenu_page('aio-tc-lite', 'General Settings', 'General Settings', 'edit_posts', 'aio-tc-lite', 'aio_timeclock_settings_page_lite');
     add_submenu_page('aio-tc-lite', 'Real Time Monitoring', 'Real Time Monitoring', 'edit_posts', 'aio-monitoring-sub', 'aio_timeclock_monitoring_page');
     add_submenu_page('aio-tc-lite', 'Employees', 'Employees', 'edit_posts', 'aio-employees-sub', 'aio_timeclock_lite_employee_page');
-    add_submenu_page('aio-tc-lite', 'Departments', 'Departments', 'edit_posts', 'aio-department-sub', 'aio_timeclock_department_page');
-    add_submenu_page('aio-tc-lite', 'Managers', 'Managers', 'edit_posts', 'aio-managers-sub', 'aio_timeclock_manager_page');
-    add_submenu_page('aio-tc-lite', 'Admins', 'Admins', 'edit_posts', 'aio-managers-sub', 'aio_timeclock_tc_admin_page');
+    add_submenu_page('aio-tc-lite', 'Departments', 'Departments', 'edit_posts', 'aio-department-sub', 'aio_timeclock_department_page');    
     add_submenu_page('aio-tc-lite', 'Shifts', 'Shifts', 'edit_posts', 'aio-shifts-sub', 'aio_timeclock_lite_shifts_page');
     add_submenu_page('aio-tc-lite', 'Reports', 'Reports', 'edit_posts', 'aio-reports-sub', 'aio_timeclock_reports_page_lite');
 }
@@ -514,7 +512,7 @@ function aioGetEmployeeSelect($selected)
     $count = 0;
     $users = get_users('fields=all_with_meta');
     usort($users, create_function('$a, $b', 'if($a->last_name == $b->last_name) { return 0;} return ($a->last_name > $b->last_name) ? 1 : -1;'));
-    foreach (array_filter($users, 'aio_filter_roles') as $user) {
+    foreach (array_filter($users, 'aio_filter_roles_lite') as $user) {
         $active = "";
         if ($selected == $user->ID) {
             $active = "selected";
@@ -524,10 +522,14 @@ function aioGetEmployeeSelect($selected)
     }
 }
 
-function aio_filter_roles($user)
+function aioGetBuildInRolesLite(){
+    return array('employee', 'manager', 'volunteer', 'contractor', 'administrator');
+}
+
+function aio_filter_roles_lite($user)
 {
-    $roles = array('employee', 'administrator', 'manager', 'volunteer', 'time_clock_admin');
-    return in_array($user->roles[0], $roles);
+    $roles = aioGetBuildInRolesLite();
+    return array_intersect($user->roles, $roles);
 }
 
 function aio_save_shift_meta_lite($post_id)
@@ -648,15 +650,7 @@ function aio_timeclock_lite_shifts_page()
 
 function aio_timeclock_lite_employee_page()
 {    
-    if (get_option("aio_use_javascript_redirect") == "enabled"){
-        echo '<script>
-            window.location="'.admin_url().'/users.php?role=employee";
-        </script>';
-    }
-    else{
-        wp_redirect( admin_url().'/users.php?role=employee' );
-        exit;
-    }
+    include("aio-employees.php");
 }
 
 function aio_timeclock_department_page()

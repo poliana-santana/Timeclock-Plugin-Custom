@@ -24,14 +24,18 @@ Employees can easily clock in and out.  Managers can easily keep track of employ
 6. View employee activity in real time.
 
 = Pro Features =
-1. Add your own Custom Roles for Time Clock access
-2. Custom Weekly and Monthly shift reports        
-3. Export Reports to Spreadsheet/CSV
-4. Monthly/Yearly Charts
-5. Unlimited Clock in Locations
-6. Google Analytics    
-7. Employee IP Address Tracking
-8. Extensions/Addons to unlock even more
+1. Add your own custom roles for time clock access
+2. Custom/Weekly/Monthly employee reports
+3. Includes Manager/Employee/Volunteer/Contractor profiles
+4. Export Shifts to Spreadsheet/CSV
+5. Manage Wages
+6. Supports Dynamic and Static Time Zones
+7. Monthly/Yearly Charts
+8. Supports Unlimited Clock in Locations
+9. Supports Google Analytics
+10. Employee IP Address Tracking (includes tracking map)
+11. Imports/Export Shifts, Locations, and more for backups and migration
+12. And Much Much More
 
 [Learn More About All in Time Clock Pro](https://codebangers.com/product/all-in-one-time-clock/)
 
@@ -76,3 +80,7 @@ Employees can easily clock in and out.  Managers can easily keep track of employ
 2018.09.10 - Version 1.0.7
 
 	1. Fixed department bug
+
+2018.10.08 - Version 1.0.8
+
+1. Added built in employee page.  

@@ -153,7 +153,7 @@
                             echo '<a href="' . get_permalink($eprofile_page) . '" class="button small_button" target="_blank"><i class="dashicons dashicons-search"></i> View Page</a>';
                             echo '<a href="/wp-admin/post.php?post=' . $eprofile_page . '&action=edit" class="button small_button" target="_blank"><i class="dashicons dashicons-edit"></i> Edit Page</a>';
                         } else {
-                            _e('Employee Profile page not found. Create one? <a href="?page=aio-tc-lite&tab=general_settings&job=create_eprofile_page" class="button small_button">+</a>');
+                            _e('Employee Profile page not found. Create one? <a href="?page=aio-tc-lite&tab=general_settings&job=create_eprofile_page" class="button small_button vmiddle"><span class="dashicons dashicons-plus"></span></a>');
                         }
                         ?>
                     </td>
