@@ -205,6 +205,9 @@ function aio_time_clock_js()
                 $department = $term->name;
             }
         }
+        $SalesorceID = get_usermeta($employee, 'SalesforceID', true);
+
+        add_post_meta($new_post_id, 'SalesforceID', $salesforceID, true);
         add_post_meta($new_post_id, 'employee_clock_in_time', $date, true);
         $day = date("Y/m/d");
         add_post_meta($new_post_id, 'start_date', $day, true);
@@ -859,6 +862,15 @@ function aio_manage_department_column_lite($display, $column, $term_id)
         $term = get_term($term_id, 'department');
         echo $term->count;
     }
+}
+
+add_action( 'object_sync_for_salesforce_pull_success', 'FFC_pull_success', 10, 3 );
+function FFC_pull_success( $op, $result, $synced_object ) {
+    $map = $synced_object['mapping_object'];
+    $salesforce_id = $map['salesforce_id'];
+    $user_id = $map['wordpress_id'];
+
+    update_user_meta( $user_id, 'SalesforceID',$saleforce_id );
 }
 
 function aio_edit_user_department_section_lite($user)
