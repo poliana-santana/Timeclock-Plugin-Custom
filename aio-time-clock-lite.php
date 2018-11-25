@@ -3,7 +3,7 @@
  * Plugin Name: All in One Time Clock Lite - A Wordpress Employee Time Tracking Plugin
  * Plugin URI:  https://codebangers.com
  * Description: Employees can easily clock in and out.  Managers can easily keep track of employees and their time.
- * Author:      Codebangers, Desiree Bruce
+ * Author:      Codebangers, Desiree Bruce, Shawn Sargent, Gavin Glowacki
  * Author URI:  https://codebangers.com
  * Version:     1.0.8
  */
@@ -205,9 +205,9 @@ function aio_time_clock_js()
                 $department = $term->name;
             }
         }
-        $SalesorceID = get_usermeta($employee, 'SalesforceID', true);
+        $SalesforceID = get_usermeta($employee, 'SalesforceID', true);
 
-        add_post_meta($new_post_id, 'SalesforceID', $salesforceID, true);
+        add_post_meta($new_post_id, 'SalesforceID', $SalesforceID, true);
         add_post_meta($new_post_id, 'employee_clock_in_time', $date, true);
         $day = date("Y/m/d");
         add_post_meta($new_post_id, 'start_date', $day, true);
