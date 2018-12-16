@@ -205,13 +205,15 @@ function aio_time_clock_js()
                 $department = $term->name;
             }
         }
-        $SalesorceID = get_usermeta($employee, 'SalesforceID', true);
+        $salesforceID = get_usermeta($employee, 'SalesforceID', true);
 
         add_post_meta($new_post_id, 'SalesforceID', $salesforceID, true);
         add_post_meta($new_post_id, 'employee_clock_in_time', $date, true);
-        $day = date("Y/m/d");
+        $day = date("Y-m-d");
         add_post_meta($new_post_id, 'start_date', $day, true);
         add_post_meta($new_post_id, 'number_of_volunteers', 1, true);
+        add_post_meta($new_post_id, 'volunteer_job', 'a0T3B000001lr0NUAQ', true);
+        add_post_meta($new_post_id, 'hours_status', 'Completed', true);
         add_post_meta($open_shift_id, 'total_time', 0, true);
         if ($department != null) {
             add_post_meta($new_post_id, 'department', $department, true);
@@ -220,6 +222,8 @@ function aio_time_clock_js()
         add_post_meta($new_post_id, 'ip_address_in', $_SERVER['REMOTE_ADDR'], true);
         $open_shift_id = $new_post_id;
         $is_clocked_in = true;
+
+        wp_update_post(array('ID' => $new_post_id));
 
         echo json_encode(
             array(
@@ -260,10 +264,12 @@ function aio_time_clock_js()
         add_post_meta($open_shift_id, 'employee_clock_out_time', $date, true);
         add_post_meta($open_shift_id, 'ip_address_out', $_SERVER['REMOTE_ADDR'], true);              
         $time_total = aio_date_difference_lite($employee_clock_out_time, $employee_clock_in_time);
-        $day = date("Y/m/d");
-        add_post_meta($new_post_id, 'end_date', $day, true);
+        $day = date("Y-m-d");
+        add_post_meta($open_shift_id, 'end_date', $day, true);
         $hours_total = aio_date_to_hours($time_total);
         update_post_meta($open_shift_id, 'total_time', $hours_total);
+
+        wp_update_post(array('ID' => $new_post_id));
 
         echo json_encode(
             array(
