@@ -205,11 +205,7 @@ function aio_time_clock_js()
                 $department = $term->name;
             }
         }
-<<<<<<< HEAD
-        $salesforceID = get_usermeta($employee, 'SalesforceID', true);
-=======
         $SalesforceID = get_usermeta($employee, 'SalesforceID', true);
->>>>>>> 95432bfaccb3b43a495a0ce17be45a79d2e7951b
 
         add_post_meta($new_post_id, 'SalesforceID', $SalesforceID, true);
         add_post_meta($new_post_id, 'employee_clock_in_time', $date, true);
