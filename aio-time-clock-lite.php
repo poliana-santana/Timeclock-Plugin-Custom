@@ -223,7 +223,7 @@ function aio_time_clock_js()
         $open_shift_id = $new_post_id;
         $is_clocked_in = true;
 
-        wp_update_post(array('ID' => $new_post_id));
+        wp_update_post(array('ID' => $new_post_id, 'post_modified_gmt' => $date));
 
         echo json_encode(
             array(
@@ -260,16 +260,16 @@ function aio_time_clock_js()
             $time_type = "defualt";
         }  
         $is_clocked_in = false;  
-        $employee_clock_in_time = get_post_meta($open_shift_id, 'employee_clock_in_time', true);        
         add_post_meta($open_shift_id, 'employee_clock_out_time', $date, true);
-        add_post_meta($open_shift_id, 'ip_address_out', $_SERVER['REMOTE_ADDR'], true);              
-        $time_total = aio_date_difference_lite($employee_clock_out_time, $employee_clock_in_time);
+        add_post_meta($open_shift_id, 'ip_address_out', $_SERVER['REMOTE_ADDR'], true);   
+        $employee_clock_in_time = get_post_meta($open_shift_id, 'employee_clock_in_time', true);                   
+        $time_total = aio_date_difference_lite($date, $employee_clock_in_time);
         $day = date("Y-m-d");
         add_post_meta($open_shift_id, 'end_date', $day, true);
         $hours_total = aio_date_to_hours($time_total);
         update_post_meta($open_shift_id, 'total_time', $hours_total);
 
-        wp_update_post(array('ID' => $new_post_id));
+        wp_update_post(array('ID' => $open_shift_id, 'post_modified_gmt' => $date));
 
         echo json_encode(
             array(
