@@ -3,7 +3,7 @@
  * Plugin Name: All in One Time Clock Lite - A Wordpress Employee Time Tracking Plugin
  * Plugin URI:  https://codebangers.com
  * Description: Employees can easily clock in and out.  Managers can easily keep track of employees and their time.
- * Author:      Codebangers
+ * Author:      Codebangers, Desiree Bruce, Shawn Sargent, Gavin Glowacki
  * Author URI:  https://codebangers.com
  * Version:     1.0.8
  */
@@ -205,13 +205,25 @@ function aio_time_clock_js()
                 $department = $term->name;
             }
         }
+        $SalesforceID = get_usermeta($employee, 'SalesforceID', true);
+
+        add_post_meta($new_post_id, 'SalesforceID', $SalesforceID, true);
         add_post_meta($new_post_id, 'employee_clock_in_time', $date, true);
+        $day = date("Y-m-d");
+        add_post_meta($new_post_id, 'start_date', $day, true);
+        add_post_meta($new_post_id, 'number_of_volunteers', 1, true);
+        add_post_meta($new_post_id, 'volunteer_job', 'a0T3B000001lr0NUAQ', true);
+        add_post_meta($new_post_id, 'hours_status', 'Completed', true);
+        add_post_meta($open_shift_id, 'total_time', 0, true);
         if ($department != null) {
             add_post_meta($new_post_id, 'department', $department, true);
         }
+
         add_post_meta($new_post_id, 'ip_address_in', $_SERVER['REMOTE_ADDR'], true);
         $open_shift_id = $new_post_id;
         $is_clocked_in = true;
+
+        wp_update_post(array('ID' => $new_post_id, 'post_modified_gmt' => $date));
 
         echo json_encode(
             array(
@@ -248,10 +260,16 @@ function aio_time_clock_js()
             $time_type = "defualt";
         }  
         $is_clocked_in = false;  
-        $employee_clock_in_time = get_post_meta($open_shift_id, 'employee_clock_in_time', true);        
         add_post_meta($open_shift_id, 'employee_clock_out_time', $date, true);
-        add_post_meta($open_shift_id, 'ip_address_out', $_SERVER['REMOTE_ADDR'], true);              
-        $time_total = aio_date_difference_lite($employee_clock_out_time, $employee_clock_in_time);
+        add_post_meta($open_shift_id, 'ip_address_out', $_SERVER['REMOTE_ADDR'], true);   
+        $employee_clock_in_time = get_post_meta($open_shift_id, 'employee_clock_in_time', true);                   
+        $time_total = aio_date_difference_lite($date, $employee_clock_in_time);
+        $day = date("Y-m-d");
+        add_post_meta($open_shift_id, 'end_date', $day, true);
+        $hours_total = aio_date_to_hours($time_total);
+        update_post_meta($open_shift_id, 'total_time', $hours_total);
+
+        wp_update_post(array('ID' => $open_shift_id, 'post_modified_gmt' => $date));
 
         echo json_encode(
             array(
@@ -487,6 +505,15 @@ function aio_date_difference_lite($end, $start)
     $dteDiff = $dteStart->diff($dteEnd);
 
     return $dteDiff->format("%H:%I:%S");
+}
+
+function aio_date_to_hours($time)
+{
+    $timeSplit = explode (':', $time);
+    $hours = intval($timeSplit[0]);
+    $minutes = intval($timeSplit[1]);
+    $seconds = intval($timeSplit[2]);
+    return round($hours + ($minutes / 60) + ($seconds / 3600), 2);
 }
 
 function aio_shift_info_box_meta_lite()
@@ -841,6 +868,15 @@ function aio_manage_department_column_lite($display, $column, $term_id)
         $term = get_term($term_id, 'department');
         echo $term->count;
     }
+}
+
+add_action( 'object_sync_for_salesforce_pull_success', 'FFC_pull_success', 10, 3 );
+function FFC_pull_success( $op, $result, $synced_object ) {
+    $map = $synced_object['mapping_object'];
+    $salesforce_id = $map['salesforce_id'];
+    $user_id = $map['wordpress_id'];
+
+    update_user_meta( $user_id, 'SalesforceID',$saleforce_id );
 }
 
 function aio_edit_user_department_section_lite($user)
