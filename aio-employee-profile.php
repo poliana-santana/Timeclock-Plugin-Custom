@@ -81,7 +81,8 @@ if (is_user_logged_in() == true) {
                         <td>
                             <?php 
                                 if ($employee_clock_in_time != null && $employee_clock_out_time != null) {
-                                    $shift_sum = $this->secondsToTime($this->dateDifference($employee_clock_in_time, $employee_clock_out_time));
+                                    // Use getShiftTotal for consistent calculation
+                                    $shift_sum = $this->secondsToTime($this->getShiftTotal(get_the_ID()));
                                     $shift_total_time = $this->addTwoTimes($shift_total_time, $shift_sum);
                                     echo esc_attr($shift_sum);
                                 }
