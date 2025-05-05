@@ -54,7 +54,7 @@ if (is_user_logged_in() == true) {
                             if ($break_in_time != null) {
                                 echo esc_attr($this->cleanDate($break_in_time));
                             } else {
-                                echo esc_attr_x('Break In Empty', 'aio-time-clock-lite');
+                                echo esc_attr_x('-', 'aio-time-clock-lite');
                             }
                             ?>
                         </td>
@@ -63,7 +63,7 @@ if (is_user_logged_in() == true) {
                             if ($break_out_time != null) {
                                 echo esc_attr($this->cleanDate($break_out_time));
                             } else {
-                                echo esc_attr_x('Break Out Empty', 'aio-time-clock-lite');
+                                echo esc_attr_x('-', 'aio-time-clock-lite');
                             }
                             ?>
                         </td>
