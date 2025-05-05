@@ -122,6 +122,8 @@ jQuery(document).ready(function () {
           jQuery("#open_shift_id").val(open_shift_id);
           jQuery("#clock_action").val(new_clock_action);
           jQuery("#aio_clock_button").html(timeClockAjax.clockOut);
+          jQuery("#aio_break_in_button").show();
+          jQuery("#aio_break_out_button").hide();
           jQuery("#clockMessage").html(
             '<i>' + timeClockAjax.isClockedIn + '</i>' + '<br /><strong>' + timeClockAjax.clockInTime + ':</strong> ' + response['employee_clock_in_time']
           );
@@ -135,12 +137,58 @@ jQuery(document).ready(function () {
           jQuery("#open_shift_id").val("");
           jQuery("#clock_action").val(new_clock_action);
           jQuery("#aio_clock_button").html(timeClockAjax.clockIn);
+          jQuery("#aio_break_in_button").hide();
+          jQuery("#aio_break_out_button").hide();
           jQuery("#clockMessage").html('<i>' + timeClockAjax.clockedOutMessage + '</i> <br /><strong>' + timeClockAjax.TotalShiftTime + ':</strong> ' + response["time_total"]);
           Toast.fire({
             icon: 'success',
             title: timeClockAjax.clockedOutMessage
           })
         }
+      }
+    });
+  });  
+
+  jQuery("#aio_break_in_button").click(function (e) {
+    e.preventDefault();
+    var now = new Date();
+    jQuery.ajax({
+      type: "post",
+      dataType: "json",
+      url: timeClockAjax.ajaxurl,
+      data: {
+        action: "aio_time_clock_lite_js",
+        clock_action: "break_in",
+        open_shift_id: jQuery("#open_shift_id").val(),
+        device_time: now.toLocaleString(),
+        nonce: timeClockAjax.Nonce
+      },
+      success: function (response) {
+        jQuery("#aio_break_in_button").hide();
+        jQuery("#aio_break_out_button").show();
+        jQuery("#clockMessage").html('<i>' + response.message + '</i>');
+      }
+    });
+  });
+
+  jQuery("#aio_break_out_button").click(function (e) {
+    e.preventDefault();
+    var now = new Date();
+    jQuery.ajax({
+      type: "post",
+      dataType: "json",
+      url: timeClockAjax.ajaxurl,
+      data: {
+        action: "aio_time_clock_lite_js",
+        clock_action: "break_out",
+        open_shift_id: jQuery("#open_shift_id").val(),
+        device_time: now.toLocaleString(),
+        nonce: timeClockAjax.Nonce
+      },
+      success: function (response) {
+        jQuery("#aio_break_in_button").show();
+        jQuery("#aio_break_out_button").hide();
+        jQuery("#clockMessage").html('<i>' + response.message + '</i>');
       }
     });
   });

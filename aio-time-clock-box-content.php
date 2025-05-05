@@ -26,6 +26,14 @@
     if (isset($custom["ip_address_out"][0])){
         $ip_address_out = sanitize_text_field($custom["ip_address_out"][0]);
     }    
+    $break_in = null;
+    if (isset($custom["break_in_time"][0]) && $this->isValidDate($custom["break_in_time"][0])){
+        $break_in = date($this->getDateTimeFormat(), strtotime(sanitize_text_field($custom["break_in_time"][0])));
+    }
+    $break_out = null;
+    if (isset($custom["break_out_time"][0]) && $this->isValidDate($custom["break_out_time"][0])){
+        $break_out = date($this->getDateTimeFormat(), strtotime(sanitize_text_field($custom["break_out_time"][0])));
+    }
     $employee_id = get_post_field( 'post_author', $post->ID );
     $recent_author = get_user_by( 'ID', $employee_id );
     $employee_name = sanitize_text_field($recent_author->last_name) . ", " . sanitize_text_field($recent_author->first_name);
@@ -97,6 +105,26 @@
             <td>
                 <a class="button" onclick="editClockTime('out')" title="<?php echo esc_attr_x('Edit Clock Out Time', 'aio-time-clock-lite'); ?>"><span class="dashicons dashicons-clock vmiddle"></span></a>                
                 <input type="text" class="adminInputDate" id="clock_out" name="clock_out" style="display:none;" value="<?php echo esc_attr($orig_clock_out); ?>" autocomplete="off"/>
+            </td>
+        </tr>
+        <tr class="">
+            <th scope="col" class="manage-column column-columnname"><strong><?php echo esc_attr_x('Break In', 'aio-time-clock-lite'); ?>: </strong></th>
+            <td>
+                <?php 
+                if ($break_in != null) {
+                    echo esc_attr($break_in); 
+                }
+                ?>
+            </td>
+        </tr>
+        <tr class="alternate">
+            <th scope="col" class="manage-column column-columnname"><strong><?php echo esc_attr_x('Break Out', 'aio-time-clock-lite'); ?>: </strong></th>
+            <td>
+                <?php 
+                if ($break_out != null) {
+                    echo esc_attr($break_out);
+                }
+                ?>
             </td>
         </tr>
         <tr class="alternate">

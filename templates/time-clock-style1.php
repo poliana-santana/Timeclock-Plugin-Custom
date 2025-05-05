@@ -18,6 +18,8 @@ if (get_current_user_id() > 0){
                 <p id="clockMessage"></p>
                 <p id="jsTimer" style="padding-bottom: 10px;"><strong>' . esc_attr_x('Current Time', 'aio-time-clock-lite') . ': </strong></p>
                 <button id="aio_clock_button" href="' . esc_url($link) . '"><div class="aio-spinner"></div></button>
+                <button id="aio_break_in_button" style="display:none;" class="button break_in">' . esc_attr_x("Break In", 'aio-time-clock-lite') . '</button>
+                <button id="aio_break_out_button" style="display:none;" class="button break_out">' . esc_attr_x("Break Out", 'aio-time-clock-lite') . '</button>
                 <button style="display:none;" id="newShift" class="button clock_in" href="' . esc_url(get_permalink($tc_page)) .'"> ' . esc_attr_x("New Shift", 'aio-time-clock-lite') . '</button>
                 <div style="height:20px;"></div>
                 '.$profile_button.'
