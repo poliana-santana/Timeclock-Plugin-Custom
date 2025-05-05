@@ -693,10 +693,10 @@ class AIO_Time_Clock_Lite_Actions
                 echo esc_attr($employee_clock_in_time);
                 break;
             case 'break_in_time':
-                echo esc_attr($break_in_time ? $break_in_time : esc_attr_x('N/A', 'aio-time-clock-lite'));
+                echo esc_attr($break_in_time ? $break_in_time : esc_attr_x('-', 'aio-time-clock-lite'));
                 break;
             case 'break_out_time':
-                echo esc_attr($break_out_time ? $break_out_time : esc_attr_x('N/A', 'aio-time-clock-lite'));
+                echo esc_attr($break_out_time ? $break_out_time : esc_attr_x('-', 'aio-time-clock-lite'));
                 break;
             case 'employee_clock_out_time':
                 echo esc_attr($employee_clock_out_time);
