@@ -351,6 +351,22 @@ class AIO_Time_Clock_Lite_Actions
                     "is_clocked_in" => $is_clocked_in,
                 )
             );
+        } elseif ($clock_action == "break_in") {
+            $current_time = $this->getCurrentTime();
+            update_post_meta($open_shift_id, 'break_in_time', sanitize_text_field($current_time["current_time"]));
+            echo json_encode(array(
+                "response" => "success",
+                "message" => esc_attr_x('Break In recorded successfully', 'aio-time-clock-lite'),
+                "break_in_time" => $this->cleanDate(sanitize_text_field($current_time["current_time"])),
+            ));
+        } elseif ($clock_action == "break_out") {
+            $current_time = $this->getCurrentTime();
+            update_post_meta($open_shift_id, 'break_out_time', sanitize_text_field($current_time["current_time"]));
+            echo json_encode(array(
+                "response" => "success",
+                "message" => esc_attr_x('Break Out recorded successfully', 'aio-time-clock-lite'),
+                "break_out_time" => $this->cleanDate(sanitize_text_field($current_time["current_time"])),
+            ));
         } else {
             echo json_encode(
                 array(
@@ -468,6 +484,8 @@ class AIO_Time_Clock_Lite_Actions
         $columns['employee'] = esc_attr_x('Employee', 'aio-time-clock-lite');
         $columns['department'] = esc_attr_x('Department', 'aio-time-clock-lite');
         $columns['employee_clock_in_time'] = esc_attr_x('Clock In Time', 'aio-time-clock-lite');
+        $columns['break_in_time'] = esc_attr_x('Break In Time', 'aio-time-clock-lite');
+        $columns['break_out_time'] = esc_attr_x('Break Out Time', 'aio-time-clock-lite');
         $columns['employee_clock_out_time'] = esc_attr_x('Clock Out Time', 'aio-time-clock-lite');
         $columns['total_shift_time'] = esc_attr_x('Total Time', 'aio-time-clock-lite');
         return $columns;
@@ -479,6 +497,8 @@ class AIO_Time_Clock_Lite_Actions
         $custom = get_post_custom($post_id);
         $employee_clock_in_time = isset($custom['employee_clock_in_time'][0]) ? $this->cleanDate(sanitize_text_field($custom['employee_clock_in_time'][0])) : null;
         $employee_clock_out_time = isset($custom['employee_clock_out_time'][0]) ? $this->cleanDate(sanitize_text_field($custom['employee_clock_out_time'][0])) : null;
+        $break_in_time = isset($custom['break_in_time'][0]) ? $this->cleanDate(sanitize_text_field($custom['break_in_time'][0])) : null;
+        $break_out_time = isset($custom['break_out_time'][0]) ? $this->cleanDate(sanitize_text_field($custom['break_out_time'][0])) : null;
         $shift_sum = "00:00";
         if ($employee_clock_in_time != null && $employee_clock_out_time != null) {
             $shift_sum = $this->secondsToTime($this->dateDifference($employee_clock_in_time, $employee_clock_out_time));
@@ -495,6 +515,12 @@ class AIO_Time_Clock_Lite_Actions
                 break;
             case 'employee_clock_in_time':
                 echo esc_attr($employee_clock_in_time);
+                break;
+            case 'break_in_time':
+                echo esc_attr($break_in_time ? $break_in_time : esc_attr_x('N/A', 'aio-time-clock-lite'));
+                break;
+            case 'break_out_time':
+                echo esc_attr($break_out_time ? $break_out_time : esc_attr_x('N/A', 'aio-time-clock-lite'));
                 break;
             case 'employee_clock_out_time':
                 echo esc_attr($employee_clock_out_time);
@@ -528,10 +554,16 @@ class AIO_Time_Clock_Lite_Actions
     {
         $employee_clock_in_time = get_post_meta($post_id, 'employee_clock_in_time', true);
         $employee_clock_out_time = get_post_meta($post_id, 'employee_clock_out_time', true);
+        $break_in_time = get_post_meta($post_id, 'break_in_time', true);
+        $break_out_time = get_post_meta($post_id, 'break_out_time', true);
         $total_shift_time = strtotime(0);
         if ($employee_clock_in_time != null && $employee_clock_out_time != null) {
             if (strtotime($employee_clock_in_time) > strtotime(0) && strtotime($employee_clock_out_time) > strtotime(0)) {
                 $total_shift_time = $this->dateDifference($employee_clock_in_time, $employee_clock_out_time);
+                if ($break_in_time != null && $break_out_time != null) {
+                    $break_duration = $this->dateDifference($break_in_time, $break_out_time);
+                    $total_shift_time -= $break_duration;
+                }
             }
         }
 
@@ -588,21 +620,35 @@ class AIO_Time_Clock_Lite_Actions
     {
         $clock_in = (isset($_REQUEST['clock_in'])) ? sanitize_text_field($_REQUEST['clock_in']) : null;
         $clock_out = (isset($_REQUEST['clock_out'])) ? sanitize_text_field($_REQUEST['clock_out']) : null;
+        $break_in = (isset($_REQUEST['break_in'])) ? sanitize_text_field($_REQUEST['break_in']) : null;
+        $break_out = (isset($_REQUEST['break_out'])) ? sanitize_text_field($_REQUEST['break_out']) : null;
 
-        if ($clock_in != null){
+        if ($clock_in != null) {
             $clock_in = str_replace("/", "-", $clock_in);
             update_post_meta($post_id, 'employee_clock_in_time', date($this->dateFormat, strtotime($clock_in)));
-        }
-        else{
+        } else {
             update_post_meta($post_id, 'employee_clock_in_time', null);
         }
 
-        if ($clock_out != null){
+        if ($clock_out != null) {
             $clock_out = str_replace("/", "-", $clock_out);
             update_post_meta($post_id, 'employee_clock_out_time', date($this->dateFormat, strtotime($clock_out)));
-        }
-        else{
+        } else {
             update_post_meta($post_id, 'employee_clock_out_time', null);
+        }
+
+        if ($break_in != null) {
+            $break_in = str_replace("/", "-", $break_in);
+            update_post_meta($post_id, 'break_in_time', date($this->dateFormat, strtotime($break_in)));
+        } else {
+            update_post_meta($post_id, 'break_in_time', null);
+        }
+
+        if ($break_out != null) {
+            $break_out = str_replace("/", "-", $break_out);
+            update_post_meta($post_id, 'break_out_time', date($this->dateFormat, strtotime($break_out)));
+        } else {
+            update_post_meta($post_id, 'break_out_time', null);
         }
 
         if (isset($_REQUEST['employee_id'])) {

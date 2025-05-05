@@ -20,8 +20,10 @@ if (is_user_logged_in() == true) {
     <table id="employeeProfileTable">
     <tr class="header">
         <th style="width:20%;"><?php echo esc_attr_x('Name', 'aio-time-clock-lite'); ?></th>
-        <th style="width:30%;"><?php echo esc_attr_x('Clock In', 'aio-time-clock-lite'); ?></th>
-        <th style="width:30%;"><?php echo esc_attr_x('Clock Out', 'aio-time-clock-lite'); ?></th>
+        <th style="width:20%;"><?php echo esc_attr_x('Clock In', 'aio-time-clock-lite'); ?></th>
+        <th style="width:20%;"><?php echo esc_attr_x('Break In', 'aio-time-clock-lite'); ?></th>
+        <th style="width:20%;"><?php echo esc_attr_x('Break Out', 'aio-time-clock-lite'); ?></th>
+        <th style="width:20%;"><?php echo esc_attr_x('Clock Out', 'aio-time-clock-lite'); ?></th>
         <th style="width:20%;"><?php echo esc_attr_x('Total', 'aio-time-clock-lite'); ?></th>
     </tr>
     <?php $loop = new WP_Query(array('post_type' => 'shift', 'author' => $current_user->ID, 'posts_per_page' => -1));?>
@@ -30,6 +32,8 @@ if (is_user_logged_in() == true) {
                     $custom = get_post_custom($loop->post->ID);
                     $employee_clock_in_time = isset($custom["employee_clock_in_time"][0]) ? sanitize_text_field($custom["employee_clock_in_time"][0]) : null;
                     $employee_clock_out_time = isset($custom["employee_clock_out_time"][0]) ? sanitize_text_field($custom["employee_clock_out_time"][0]) : null;
+                    $break_in_time = isset($custom["break_in_time"][0]) ? sanitize_text_field($custom["break_in_time"][0]) : null;
+                    $break_out_time = isset($custom["break_out_time"][0]) ? sanitize_text_field($custom["break_out_time"][0]) : null;
                     $shift_sum = '00:00';
                     $author_id = intval(get_the_author_meta('ID'));
                     ?>
@@ -42,6 +46,24 @@ if (is_user_logged_in() == true) {
                                 echo esc_attr($newDate);
                             } else {
                                 echo esc_attr_x('Clock In Empty', 'aio-time-clock-lite');
+                            }
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            if ($break_in_time != null) {
+                                echo esc_attr($this->cleanDate($break_in_time));
+                            } else {
+                                echo esc_attr_x('Break In Empty', 'aio-time-clock-lite');
+                            }
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            if ($break_out_time != null) {
+                                echo esc_attr($this->cleanDate($break_out_time));
+                            } else {
+                                echo esc_attr_x('Break Out Empty', 'aio-time-clock-lite');
                             }
                             ?>
                         </td>
@@ -69,7 +91,7 @@ if (is_user_logged_in() == true) {
                 <?php $count++;
             endwhile;
         ?>
-        <tr><td></td><td></td><td><strong><?php echo esc_attr_x('Total Shift Time', 'aio-time-clock-lite'); ?>:</strong> </td><td><?php echo esc_attr($shift_total_time); ?></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td><strong><?php echo esc_attr_x('Total Shift Time', 'aio-time-clock-lite'); ?>:</strong> </td><td><?php echo esc_attr($shift_total_time); ?></td></tr>
     </table>
 
     <style>
