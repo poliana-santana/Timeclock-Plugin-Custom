@@ -499,10 +499,6 @@ class AIO_Time_Clock_Lite_Actions
         $employee_clock_out_time = isset($custom['employee_clock_out_time'][0]) ? $this->cleanDate(sanitize_text_field($custom['employee_clock_out_time'][0])) : null;
         $break_in_time = isset($custom['break_in_time'][0]) ? $this->cleanDate(sanitize_text_field($custom['break_in_time'][0])) : null;
         $break_out_time = isset($custom['break_out_time'][0]) ? $this->cleanDate(sanitize_text_field($custom['break_out_time'][0])) : null;
-        $shift_sum = "00:00";
-        if ($employee_clock_in_time != null && $employee_clock_out_time != null) {
-            $shift_sum = $this->secondsToTime($this->dateDifference($employee_clock_in_time, $employee_clock_out_time));
-        }
 
         $author_id = get_the_author_meta('ID');
 
@@ -526,6 +522,8 @@ class AIO_Time_Clock_Lite_Actions
                 echo esc_attr($employee_clock_out_time);
                 break;
             case 'total_shift_time':
+                // Use getShiftTotal for consistent calculation
+                $shift_sum = $this->secondsToTime($this->getShiftTotal($post_id));
                 echo esc_attr($shift_sum);
                 break;
         }
@@ -557,9 +555,13 @@ class AIO_Time_Clock_Lite_Actions
         $break_in_time = get_post_meta($post_id, 'break_in_time', true);
         $break_out_time = get_post_meta($post_id, 'break_out_time', true);
         $total_shift_time = strtotime(0);
+
         if ($employee_clock_in_time != null && $employee_clock_out_time != null) {
             if (strtotime($employee_clock_in_time) > strtotime(0) && strtotime($employee_clock_out_time) > strtotime(0)) {
+                // Calculate total shift duration
                 $total_shift_time = $this->dateDifference($employee_clock_in_time, $employee_clock_out_time);
+
+                // Subtract break duration if both break_in_time and break_out_time exist
                 if ($break_in_time != null && $break_out_time != null) {
                     $break_duration = $this->dateDifference($break_in_time, $break_out_time);
                     $total_shift_time -= $break_duration;
@@ -803,23 +805,21 @@ class AIO_Time_Clock_Lite_Actions
                 if ($this->isValidDate($start) && $this->isValidDate($end)) {
                     $start = str_replace('/', '-', $start);
                     $end = str_replace('/', '-', $end);
-                    $s = new DateTime();
-                    $start_date = $s->setTimestamp(intval(strtotime($start)));
-                    $e = new DateTime();
-                    $end_date = $e->setTimestamp(intval(strtotime($end)));
-                    $diff = $end_date->diff($start_date);
-                    $diff_sec = $diff->format('%r') . ( // prepend the sign - if negative, change it to R if you want the +, too
-                        ($diff->s) + // seconds (no errors)
-                        (60 * ($diff->i)) + // minutes (no errors)
-                        (60 * 60 * ($diff->h)) + // hours (no errors)
-                        (24 * 60 * 60 * ($diff->d)) + // days (no errors)
-                        (30 * 24 * 60 * 60 * ($diff->m)) + // months (???)
-                        (365 * 24 * 60 * 60 * ($diff->y)) // years (???)
-                    );
-                    return $diff_sec;
+
+                    // Calculate the total seconds between the two timestamps
+                    $start_timestamp = strtotime($start);
+                    $end_timestamp = strtotime($end);
+                    $total_seconds = $end_timestamp - $start_timestamp;
+
+                    // Convert seconds to minutes and round up to the next full minute
+                    $total_minutes = ceil($total_seconds / 60);
+
+                    // Return the total minutes in seconds (to maintain compatibility with existing logic)
+                    return $total_minutes * 60;
                 }
             }
         }
+        return 0; // Default to 0 if invalid input
     }
 
     public function addTwoTimes($time1 = "00:00", $time2 = "00:00")
