@@ -1,5 +1,10 @@
 jQuery(document).ready(function () {
-
+  var Toast = Swal.mixin({
+    toast: true,
+    position: 'top-center',
+    showConfirmButton: false,
+    timer: 3000
+  });
   if (jQuery("#aio_time_clock").length > 0) {
     employee = jQuery("#employee").val();
     jQuery.ajax({
@@ -12,21 +17,20 @@ jQuery(document).ready(function () {
         employee: employee,
         nonce: timeClockAjax.Nonce
       },
-      success: function (response) {        
+      success: function (response) {
         var o_shift = response["open_shift_id"];
         var is_clocked_in = response["is_clocked_in"];
         var new_clock_action = "";
-        if (is_clocked_in){
+        if (is_clocked_in) {
           new_clock_action = "clock_out";
           jQuery("#open_shift_id").val(o_shift);
           jQuery("#clock_action").val(new_clock_action);
           jQuery("#aio_clock_button").html(timeClockAjax.clockOut);
           jQuery("#clockMessage").html(
-            '<i>' + timeClockAjax.isClockedIn + '</i><br /><strong>' + timeClockAjax.clockInTime + ':</strong> ' +  response['employee_clock_in_time']
+            '<i>' + timeClockAjax.isClockedIn + '</i><br /><strong>' + timeClockAjax.clockInTime + ':</strong> ' + response['employee_clock_in_time']
           );
-
         }
-        else{
+        else {
           new_clock_action = "clock_in";
           jQuery("#clock_action").val(new_clock_action);
           jQuery("#open_shift_id").val("");
@@ -50,21 +54,21 @@ jQuery(document).ready(function () {
           employee: employee,
           nonce: timeClockAjax.Nonce
         },
-        success: function (response) {          
+        success: function (response) {
           var o_shift = response["open_shift_id"];
           var is_clocked_in = response["is_clocked_in"];
           var new_clock_action = "";
-          if (is_clocked_in){
+          if (is_clocked_in) {
             new_clock_action = "clock_out";
             jQuery("#open_shift_id").val(o_shift);
             jQuery("#clock_action").val(new_clock_action);
             jQuery("#aio_clock_button").html(timeClockAjax.clockOut);
             jQuery("#clockMessage").html(
-              '<i>' + timeClockAjax.isClockedIn + '</i><br /><strong>' + timeClockAjax.clockInTime + ':</strong> ' +  response['employee_clock_in_time']
+              '<i>' + timeClockAjax.isClockedIn + '</i><br /><strong>' + timeClockAjax.clockInTime + ':</strong> ' + response['employee_clock_in_time']
             );
-  
+
           }
-          else{
+          else {
             new_clock_action = "clock_in";
             jQuery("#clock_action").val(new_clock_action);
             jQuery("#open_shift_id").val("");
@@ -74,12 +78,12 @@ jQuery(document).ready(function () {
         }
       });
     }
-    else{
+    else {
       jQuery("#aio_time_clock_widget").html(timeClockAjax.TimeClockDetected);
-    }    
+    }
   }
 
-  if( jQuery('#jsTimer').length ) {
+  if (jQuery('#jsTimer').length) {
     var myTimerVar = setInterval(myTimer, 1000);
   }
 
@@ -109,11 +113,11 @@ jQuery(document).ready(function () {
         device_time: now.toLocaleString(),
         nonce: timeClockAjax.Nonce
       },
-      success: function (response) {        
+      success: function (response) {
         var open_shift_id = response["open_shift_id"];
         var is_clocked_in = response["is_clocked_in"];
         var new_clock_action = "";
-        if (is_clocked_in){
+        if (is_clocked_in) {
           new_clock_action = "clock_out";
           jQuery("#open_shift_id").val(open_shift_id);
           jQuery("#clock_action").val(new_clock_action);
@@ -121,23 +125,30 @@ jQuery(document).ready(function () {
           jQuery("#clockMessage").html(
             '<i>' + timeClockAjax.isClockedIn + '</i>' + '<br /><strong>' + timeClockAjax.clockInTime + ':</strong> ' + response['employee_clock_in_time']
           );
-
+          Toast.fire({
+            icon: 'success',
+            title: timeClockAjax.isClockedIn
+          })
         }
-        else{
+        else {
           new_clock_action = "clock_in";
           jQuery("#open_shift_id").val("");
           jQuery("#clock_action").val(new_clock_action);
           jQuery("#aio_clock_button").html(timeClockAjax.clockIn);
-          jQuery("#clockMessage").html('<i>' + timeClockAjax.clockedOutMessage + '</i> <br /><strong>'+timeClockAjax.TotalShiftTime+':</strong> ' + response["time_total"]);
+          jQuery("#clockMessage").html('<i>' + timeClockAjax.clockedOutMessage + '</i> <br /><strong>' + timeClockAjax.TotalShiftTime + ':</strong> ' + response["time_total"]);
+          Toast.fire({
+            icon: 'success',
+            title: timeClockAjax.clockedOutMessage
+          })
         }
       }
     });
-  });  
+  });
 });
 
 function myTimer() {
   var d = new Date();
-  document.getElementById("jsTimer").innerHTML = "<strong>"+timeClockAjax.currentTime+":</strong> " + d.toLocaleTimeString();
+  document.getElementById("jsTimer").innerHTML = "<strong>" + timeClockAjax.currentTime + ":</strong> " + d.toLocaleTimeString();
 }
 
 function employeProfileSearch() {
@@ -147,7 +158,7 @@ function employeProfileSearch() {
   filter = input.value.toUpperCase();
   table = document.getElementById("employeeProfileTable");
   tr = table.getElementsByTagName("tr");
-  
+
   for (i = 0; i < tr.length; i++) {
     td = tr[i].getElementsByTagName("td")[0];
     if (td) {
@@ -156,6 +167,6 @@ function employeProfileSearch() {
       } else {
         tr[i].style.display = "none";
       }
-    } 
+    }
   }
 }

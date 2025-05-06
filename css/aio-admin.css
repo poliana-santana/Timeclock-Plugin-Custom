@@ -65,6 +65,10 @@
   font-weight: 900;
 }
 
+.time-clock-admin-button{
+  margin-top: -5px !important;
+}
+
 .vmiddle {
   vertical-align: middle;
 }
@@ -326,7 +330,6 @@ table.dataTable tfoot th, table.dataTable tfoot td {
 
 table.dataTable thead .sorting, table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc, table.dataTable thead .sorting_asc_disabled, table.dataTable thead .sorting_desc_disabled {
   cursor: pointer;
-  *cursor: hand;
   background-repeat: no-repeat;
   background-position: center right;
 }
@@ -571,7 +574,6 @@ table.dataTable, table.dataTable th, table.dataTable td {
 .dataTables_wrapper {
   position: relative;
   clear: both;
-  *zoom: 1;
   zoom: 1;
 }
 
@@ -609,7 +611,6 @@ table.dataTable, table.dataTable th, table.dataTable td {
   text-align: center;
   text-decoration: none !important;
   cursor: pointer;
-  *cursor: hand;
   color: #6b6363 !important;
   border: 1px solid transparent;
   border-radius: 2px;
@@ -710,7 +711,6 @@ table.dataTable, table.dataTable th, table.dataTable td {
 }
 
 .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody {
-  *margin-top: -1px;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -733,12 +733,23 @@ table.dataTable, table.dataTable th, table.dataTable td {
   border-bottom: none;
 }
 
+.hidden-item{
+  display: none;
+}
+
 .dataTables_wrapper:after {
   visibility: hidden;
   display: block;
   content: "";
   clear: both;
   height: 0;
+}
+
+.time-clock-swal-header{
+  font-size: 22px;
+  line-height: .2;
+  padding-bottom: 20px;
+
 }
 
 @media screen and (max-width: 767px) {

@@ -1,11 +1,11 @@
 === All in One Time Clock Lite - Tracking Employee Time Has Never Been Easier ===
 Contributors: codebangers
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FPW6RYHR6X8SQ
-Tags: employee, time, clock, timeclock, all in one, wordpress, volunteer, aio time clock, managers, paycheck, punch clock, time tracking, time, clock, payments, all in one time clock, invoice, contractors, time sheet
+Donate link: https://www.paypal.com/donate/?business=PZD95DG6ZZTMY&no_recurring=0&item_name=Support+free+plugin+development&currency_code=USD
+Tags: employee, time, clock, volunteer, punch clock
 Requires at least: 3.0
-Tested up to: 6.7.1
+Tested up to: 6.8.0
 Requires PHP: 5.6
-Stable tag: 1.0
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -337,3 +337,25 @@ Use coupon code "timeclockpro"
 2025-1-16 - Version 1.3.324
 
 1. Testing with Wordpress 6.7.1
+
+2025-5-2 - Version 1.3.325
+
+1. Fixed security issues
+
+2025-5-4 - Version 1.3.326
+
+1. Fixed security issues
+2. Improved UI
+
+2025-5-4 - Version 1.3.327
+
+1. Fixed stable tag and keywords
+
+2025-5-5 - Version 1.3.328
+
+1. more keywords and fixing wp version
+
+2025-5-5 - Version 2.0
+
+1. fixing structure
+2. adding toast notifications

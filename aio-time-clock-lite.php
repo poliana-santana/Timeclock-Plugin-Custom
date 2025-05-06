@@ -5,7 +5,7 @@
  * Description: Employees can easily clock in and out.  Managers can run reports, keep track of employees and their time.
  * Author:      Codebangers
  * Author URI:  https://codebangers.com
- * Version:     1.3.324
+ * Version:     2.0
  */
 class AIO_Time_Clock_Plugin_Lite
 {
@@ -13,7 +13,7 @@ class AIO_Time_Clock_Plugin_Lite
     {
         require_once("aio-time-clock-lite-actions.php");       
         $aio_tcl_actions = new AIO_Time_Clock_Lite_Actions();
-        $aio_tcl_actions->setup();        
+        $aio_tcl_actions->setup();
     }
 }
 

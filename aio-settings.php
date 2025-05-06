@@ -8,7 +8,6 @@
     <h2 class="nav-tab-wrapper">
         <?php settings_errors(); ?>
         <?php
-            $new_eprofile_id = null;
             $job = isset($_GET["job"]) ? sanitize_text_field($_GET["job"]) : null;
             $current_user = wp_get_current_user();        
             $tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : "general_settings";
@@ -39,7 +38,8 @@
         </a>
     </h2>
     <!--Handle the Tabs-->
-    <?php if ($tab == "general_settings") {
+    <?php 
+    if ($tab == "general_settings") {
         if (get_option('permalink_structure')) {
             //echo 'Permalinks enabled';
         } else {
@@ -50,73 +50,6 @@
             </a></div>
             <?php 
         }
-        if (isset($job)){
-            if ($job == "create_timeclock_page") {
-                $tc_page = $this->aio_check_tc_shortcode_lite();
-                if ($tc_page == null) {
-                    $my_post = array(
-                        'post_type' => 'page',
-                        'post_title' => 'Time Clock',
-                        'post_status' => 'publish',
-                        'post_content' => '[show_aio_time_clock_lite]',
-                        'comment_status' => 'closed',
-                        'post_author' => $current_user->ID
-                    );
-                    // Insert the post into the database
-                    $new_post_id = wp_insert_post($my_post);
-                }
-                ?>
-                <div id="setting-error-settings_updated" class="updated settings-error aio-tc-alert">
-                    <?php 
-                    if ($new_post_id != null) {
-                        echo esc_attr_x('TimeClock Page Created Sucessfully', 'aio-time-clock-lite'); ?>
-                        <a href="<?php echo esc_url(get_permalink($new_post_id)); ?>" class="button small_button" target="_blank"><i class="dashicons dashicons-search"></i><?php echo esc_attr_x('View Page', 'aio-time-clock-lite'); ?></a>
-                    <?php } else {
-                        echo esc_attr_x('Something went wrong.  Timeclock was not created successfully', 'aio-time-clock-lite');
-                        if ($tc_page != null) {
-                            echo esc_attr_x('You already have a TimeClock page created', 'aio-time-clock-lite'); ?>
-                            <a href="<?php echo esc_url(get_permalink($tc_page)); ?>" class="button small_button" target="_blank"><i class="dashicons dashicons-search"></i><?php echo esc_attr_x('View Page', 'aio-time-clock-lite'); ?></a>
-                            <?php 
-                        }
-                    }
-                    ?>
-                </div>
-                <?php 
-            }
-            if ($job == "create_eprofile_page") {
-                $eprofile_page = $this->check_eprofile_shortcode_lite();
-                if ($eprofile_page == null) {
-                    $my_post = array(
-                        'post_type' => 'page',
-                        'post_title' => 'Employee Profile',
-                        'post_status' => 'publish',
-                        'post_content' => '[show_aio_employee_profile_lite]',
-                        'comment_status' => 'closed',
-                        'post_author' => 1
-                    );
-                    // Insert the post into the database
-                    $new_eprofile_id = wp_insert_post($my_post);
-                }
-                ?>
-                <div id="setting-error-settings_updated" class="updated settings-error aio-tc-alert">
-                    <?php 
-                    if ($new_eprofile_id != null) {
-                        echo esc_attr_x('Employee Profile Page Created Sucessfully', 'aio-time-clock-lite'); ?>
-                        <a href="<?php echo esc_url(get_permalink($new_eprofile_id)); ?>" class="button small_button" target="_blank"><i class="dashicons dashicons-search"></i> <?php echo esc_attr_x('View Profile', 'aio-time-clock-lite'); ?></a>
-                        <?php 
-                    } else {
-                        echo esc_attr_x('Something went wrong.  Employee Profile Page was not created successfully', 'aio-time-clock-lite');
-                        if ($eprofile_page != null) {
-                            echo esc_attr_x('You already have a Employee Profile page created', 'aio-time-clock-lite'); ?>
-                            <a href="<?php echo esc_url(get_permalink($eprofile_page)); ?>" class="button small_button" target="_blank"><i class="dashicons dashicons-search"></i> <?php echo esc_attr_x('View Profile', 'aio-time-clock-lite'); ?></a>
-                            <?php 
-                        }
-                    }
-                    ?>
-                </div>
-                <?php 
-            }
-        }
         ?>
         <h3><?php echo esc_attr_x('General Settings', 'aio-time-clock-lite'); ?></h3>
         <form method="post" action="options.php">
@@ -124,7 +57,7 @@
             <?php do_settings_sections('nertworks-timeclock-settings-group');
             $options = get_option('nertworks-timeclock-settings-group');
             ?>
-            <table class="widefat fixed" cellspacing="0">
+            <table class="widefat fixed time-clock-table" cellspacing="0">
                 <tr class="alternate">
                     <th scope="col" class="manage-column column-columnname"><strong><?php echo esc_attr_x('Company Name', 'aio-time-clock-lite'); ?>: </strong></th>
                     <td>
@@ -146,14 +79,14 @@
                 </tr>
                 <tr class="alternate">
                     <th scope="col" class="manage-column column-columnname"><strong><?php echo esc_attr_x('Time Clock', 'aio-time-clock-lite'); ?>: </strong></th>
-                    <td>
+                    <td id="create_timeclock_page_td">
                         <?php
                         $tc_page = $this->aio_check_tc_shortcode_lite();
                         if ($tc_page != null) { ?>
-                            <a href="<?php echo esc_url(get_permalink($tc_page)); ?>" class="button small_button" target="_blank"><i class="dashicons dashicons-search"></i> <?php echo esc_attr_x('View Page', 'aio-time-clock-lite'); ?></a>
-                            <a href="/wp-admin/post.php?post=<?php echo esc_attr($tc_page); ?>&action=edit" class="button small_button" target="_blank"><i class="dashicons dashicons-edit"></i><?php echo esc_attr_x('Edit Page', 'aio-time-clock-lite'); ?></a>
+                            <a href="<?php echo esc_url(get_permalink($tc_page)); ?>" class="button small_button" target="_blank"><i class="dashicons dashicons-search vmiddle"></i>&nbsp;<?php echo esc_attr_x('View Page', 'aio-time-clock-lite'); ?></a>
+                            <a href="/wp-admin/post.php?post=<?php echo esc_attr($tc_page); ?>&action=edit" class="button small_button" target="_blank"><i class="dashicons dashicons-edit vmiddle"></i>&nbsp; <?php echo esc_attr_x('Edit Page', 'aio-time-clock-lite'); ?></a>
                         <?php } else { ?>
-                            <?php echo esc_attr_x('Time Clock page not found. Would you like to create one', 'aio-time-clock-lite'); ?>?<a href="<?php echo esc_url(admin_url('?page=aio-tc-lite&tab=general_settings&job=create_timeclock_page')); ?>" class="button small_button"><span class="dashicons dashicons-plus vmiddle"></span></a>
+                            <?php echo esc_attr_x('Time Clock page not found. Would you like to create one', 'aio-time-clock-lite'); ?>? &nbsp; <a onclick="createTimeClockPage(this);" data-admin-action="<?php echo esc_attr("create_timeclock_page"); ?>" class="button small_button time-clock-admin-button"><span class="dashicons dashicons-plus vmiddle"></span></a>
                             <?php 
                         }
                         ?>
@@ -164,16 +97,16 @@
                 </tr>
                 <tr>
                     <th scope="col" class="manage-column column-columnname"><strong><?php echo esc_attr_x('Employee Profile', 'aio-time-clock-lite');?>: </strong></th>
-                    <td>
+                    <td id="create_eprofile_page_td">
                         <?php
                         $eprofile_page = $this->check_eprofile_shortcode_lite();
                         if ($eprofile_page != null) { ?>
-                            <a href="<?php echo esc_url(get_permalink(intval($eprofile_page))); ?>" class="button small_button" target="_blank"><i class="dashicons dashicons-search"></i> <?php echo esc_attr_x('View Page', 'aio-time-clock-lite'); ?></a>
-                            <a href="/wp-admin/post.php?post=<?php echo intval($eprofile_page); ?>&action=edit" class="button small_button" target="_blank"><i class="dashicons dashicons-edit"></i> <?php echo esc_attr_x('Edit Page', 'aio-time-clock-lite'); ?></a>
+                            <a href="<?php echo esc_url(get_permalink(intval($eprofile_page))); ?>" class="button small_button" target="_blank"><i class="dashicons dashicons-search vmiddle"></i>&nbsp;<?php echo esc_attr_x('View Page', 'aio-time-clock-lite'); ?></a>
+                            <a href="/wp-admin/post.php?post=<?php echo intval($eprofile_page); ?>&action=edit" class="button small_button" target="_blank"><i class="dashicons dashicons-edit vmiddle"></i>&nbsp;<?php echo esc_attr_x('Edit Page', 'aio-time-clock-lite'); ?></a>
                         <?php 
                         } else { 
                             ?>
-                            <?php echo esc_attr_x('Employee Profile page not found. Would you like to create one', 'aio-time-clock-lite'); ?>? <a href="<?php echo esc_url(admin_url('?page=aio-tc-lite&tab=general_settings&job=create_eprofile_page')); ?>" class="button small_button"><span class="dashicons dashicons-plus vmiddle"></span></a>                    
+                            <?php echo esc_attr_x('Employee Profile page not found. Would you like to create one', 'aio-time-clock-lite'); ?>? &nbsp; <a onclick="createTimeClockPage(this);" data-admin-action="<?php echo esc_attr("create_eprofile_page"); ?>" class="button small_button time-clock-admin-button"><span class="dashicons dashicons-plus vmiddle"></span></a>                    
                             <?php 
                         }
                         ?>
@@ -185,7 +118,7 @@
                 <tr class="alternate">
                     <th scope="col" class="manage-column column-columnname"><strong><?php echo esc_attr_x('Quick Pick Time Clock', 'aio-time-clock-lite');?>: </strong></th>
                     <td>
-                        <?php echo esc_attr_x('Available in', 'aio-time-clock-lite').' <a href="https://codebangers.com/product/all-in-one-time-clock/" target="_blank" class="button">' . esc_attr_x('Pro', 'aio-time-clock-lite') . '</a>'; ?>
+                        <?php echo esc_attr_x('Available in', 'aio-time-clock-lite').' &nbsp; <a href="https://codebangers.com/product/all-in-one-time-clock/" target="_blank" class="button time-clock-admin-button"><i class="dashicons dashicons-clock vmiddle"></i>&nbsp; ' . esc_attr_x('Pro', 'aio-time-clock-lite') . '</a>'; ?>
                     </td>
                     <td>
                         <i><?php echo esc_attr_x('List style employees list page that allows users to quickly clock in and out of shifts using a pin number', 'aio-time-clock-lite');?></i>
@@ -206,7 +139,7 @@
                 <tr class="alternate">
                     <th scope="col" class="manage-column column-columnname"><strong><?php echo esc_attr_x('Show Employee Avatar', 'aio-time-clock-lite'); ?>: </strong></th>
                     <td>
-                        <?php echo esc_attr_x('Available in', 'aio-time-clock-lite').' <a href="https://codebangers.com/product/all-in-one-time-clock/" target="_blank" class="button">' . esc_attr_x('Pro', 'aio-time-clock-lite') . '</a>'; ?>
+                        <?php echo esc_attr_x('Available in', 'aio-time-clock-lite').' &nbsp; <a href="https://codebangers.com/product/all-in-one-time-clock/" target="_blank" class="button time-clock-admin-button"><span class="dashicons dashicons-clock vmiddle"></span>&nbsp; ' . esc_attr_x('Pro', 'aio-time-clock-lite') . '</a>'; ?>
                     </td>
                     <td>
                         <i>
@@ -241,7 +174,7 @@
                 <tr class="alternate">
                     <th scope="col" class="manage-column column-columnname"><strong><?php echo esc_attr_x('Enable Location', 'aio-time-clock-lite'); ?>: </strong></th>
                     <td>
-                        <?php echo esc_attr_x('Available in', 'aio-time-clock-lite').' <a href="https://codebangers.com/product/all-in-one-time-clock/" target="_blank" class="button">' . esc_attr_x('Pro', 'aio-time-clock-lite') . '</a>'; ?>
+                        <?php echo esc_attr_x('Available in', 'aio-time-clock-lite').' &nbsp; <a href="https://codebangers.com/product/all-in-one-time-clock/" target="_blank" class="button time-clock-admin-button"><span class="dashicons dashicons-clock vmiddle"></span>&nbsp; ' . esc_attr_x('Pro', 'aio-time-clock-lite') . '</a>'; ?>
                     </td>
                     <td>
                         <i>
@@ -252,7 +185,7 @@
                 <tr>
                     <th scope="col" class="manage-column column-columnname"><strong><?php echo esc_attr_x('Custom Roles', 'aio-time-clock-lite'); ?>: </strong></th>
                     <td>
-                        <?php echo esc_attr_x('Available in', 'aio-time-clock-lite').' <a href="https://codebangers.com/product/all-in-one-time-clock/" target="_blank" class="button">' . esc_attr_x('Pro', 'aio-time-clock-lite') . '</a>'; ?>
+                        <?php echo esc_attr_x('Available in', 'aio-time-clock-lite').' &nbsp; <a href="https://codebangers.com/product/all-in-one-time-clock/" target="_blank" class="button time-clock-admin-button"><span class="dashicons dashicons-clock vmiddle"></span>&nbsp; ' . esc_attr_x('Pro', 'aio-time-clock-lite') . '</a>'; ?>
                     </td>
                     <td>
                         <i>
@@ -261,6 +194,7 @@
                     </td>
                 </tr>
             </table>
+            <input type="hidden" name="time-clock-nonce" id="time-clock-nonce" value="<?php echo wp_create_nonce("time-clock-nonce"); ?>">
             <?php submit_button(); ?>
         </form>
         <?php
