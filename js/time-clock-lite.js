@@ -134,6 +134,9 @@ jQuery(document).ready(function () {
           jQuery("#aio_break_out_button").hide();
           jQuery("#clockMessage").html('<i>' + timeClockAjax.clockedOutMessage + '</i> <br /><strong>'+timeClockAjax.TotalShiftTime+':</strong> ' + response["time_total"]);
         }
+
+        // Refresh the shift details table
+        refreshShiftDetails();
       }
     });
   });  
@@ -206,4 +209,21 @@ function employeProfileSearch() {
       }
     } 
   }
+}
+
+function refreshShiftDetails() {
+  var employee = jQuery("#employee").val();
+  jQuery.ajax({
+    type: "post",
+    url: timeClockAjax.ajaxurl,
+    data: {
+      action: "aio_time_clock_lite_js",
+      clock_action: "get_shift_details",
+      employee: employee,
+      nonce: timeClockAjax.Nonce
+    },
+    success: function (response) {
+      jQuery(".shift-details tbody").html(response);
+    }
+  });
 }

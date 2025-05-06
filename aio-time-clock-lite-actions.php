@@ -254,7 +254,52 @@ class AIO_Time_Clock_Lite_Actions
         $message = null;
         $time_total = strtotime(0);
 
-        if ($clock_action == "check_shifts") {
+        if ($clock_action == "get_shift_details") {
+            $employee = isset($_POST["employee"]) ? intval($_POST["employee"]) : intval($current_user->ID);
+            $today = date('Y-m-d');
+            $shifts = new WP_Query(array(
+                'post_type' => 'shift',
+                'author' => $employee,
+                'posts_per_page' => -1,
+                'meta_query' => array(
+                    array(
+                        'key' => 'employee_clock_in_time',
+                        'value' => $today,
+                        'compare' => 'LIKE'
+                    )
+                )
+            ));
+
+            if ($shifts->have_posts()) {
+                while ($shifts->have_posts()) {
+                    $shifts->the_post();
+                    $custom = get_post_custom(get_the_ID());
+                    if (strpos($custom['employee_clock_in_time'][0], $today) !== false) {
+                        echo '<tr>
+                            <td>' . esc_html(date('m / d / Y', strtotime($custom['employee_clock_in_time'][0]))) . '</td>
+                            <td>' . esc_html($custom['employee_clock_in_time'][0] ?? '-- : -- : --') . '</td>
+                            <td>' . esc_html($custom['employee_clock_out_time'][0] ?? '-- : -- : --') . '</td>
+                            <td>' . esc_html($custom['total_shift_time'][0] ?? '-- : -- : --') . '</td>
+                            <td>' . esc_html($custom['break_in_time'][0] ?? '-- : -- : --') . '</td>
+                            <td>' . esc_html($custom['break_out_time'][0] ?? '-- : -- : --') . '</td>
+                            <td>' . esc_html($custom['total_hour'][0] ?? '-- : -- : --') . '</td>
+                        </tr>';
+                    }
+                }
+                wp_reset_postdata();
+            } else {
+                echo '<tr>
+                    <td>' . date('m / d / Y') . '</td>
+                    <td>-- : -- : --</td>
+                    <td>-- : -- : --</td>
+                    <td>-- : -- : --</td>
+                    <td>-- : -- : --</td>
+                    <td>-- : -- : --</td>
+                    <td>-- : -- : --</td>
+                </tr>';
+            }
+            wp_die();
+        } elseif ($clock_action == "check_shifts") {
             $found_shift_id = null;
             $args = array(
                 'post_type' => 'shift',
