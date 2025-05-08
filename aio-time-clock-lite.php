@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: All in One Time Clock Lite - Tracking Employee Time Has Never Been Easier
+ * Plugin Name: Custom All in One Time Clock Lite
  * Plugin URI:  https://codebangers.com/product/all-in-one-time-clock-lite/
- * Description: Employees can easily clock in and out.  Managers can run reports, keep track of employees and their time.
- * Author:      Codebangers
- * Author URI:  https://codebangers.com
- * Version:     2.0
+ * Description: Custom version of All in One Time Clock Lite with break time tracking and UI changes.
+ * Author:      Codebangers, Poliana Santana
+ * Author URI:  https://github.com/poliana-santana/Timeclock-Plugin-Custom
+ * Version:     2.0.1
  */
 class AIO_Time_Clock_Plugin_Lite
 {
