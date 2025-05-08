@@ -1,0 +1,67 @@
+#aio_time_clock_widget {
+    max-width: 960px;
+    margin: 30px auto;
+    font-family: sans-serif;
+    color: #222;
+    text-align: center;
+}
+
+.widget-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.widget-greeting {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    /* padding: 20px; */
+    width: 50%;
+}
+
+.current-time {
+    font-size: 1.5rem;
+    /* margin-top: 10px; */
+    display: flex;
+    justify-content: center;
+}
+
+.widget-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 50%;
+    align-items: center;
+}
+
+.clock-button {
+    padding: 24px 36px;
+    font-size: 1rem;
+    background-color: #0b50b2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: larger;
+}
+
+.clock-button:hover {
+    background-color: #093e8a;
+}
+
+.shift-details {
+    margin-top: 20px;
+}
+
+.shift-details table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.shift-details th,
+.shift-details td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
