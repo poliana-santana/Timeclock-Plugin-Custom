@@ -17,17 +17,21 @@ if (is_user_logged_in()){
     '<div id="aio_time_clock_widget">
         <div class="widget-main">
             <div class="widget-greeting">
-                <h1>Hi, ' . esc_attr($current_user->user_firstname) . ' ' . esc_attr($current_user->user_lastname) . '!</h1>
+                <h1>Hi, ' . esc_attr($current_user->user_firstname) . '!</h1>
                 <p id="clockMessage"></p>
-                <div class="current-time">
-                    <span id="jsTimer"><strong>' . esc_attr_x('Current Time', 'aio-time-clock-lite') . ':</strong></span>
-                </div>
+                <p class="current-time">
+                    <span id="jsTimer"><strong>' . esc_attr_x('Current Time', 'aio-time-clock-lite') . '</strong></span>
+                </p>
             </div>
             <div class="widget-buttons">
                 <button id="aio_clock_button" class="clock-button" href="' . esc_url($link) . '"><div class="aio-spinner"></div></button>
                 <button style="display:none;" id="newShift" class="clock-button clock_in" href="' . esc_url(get_permalink($tc_page)) .'"> ' . esc_attr_x("New Shift", 'aio-time-clock-lite') . '</button>
+                <button id="aio_break_in_button" style="display:none;" class="clock-button break_in">' . esc_attr_x("On Break", 'aio-time-clock-lite') . '</button>
+                <button id="aio_break_out_button" style="display:none;" class="clock-button break_out">' . esc_attr_x("Off Break", 'aio-time-clock-lite') . '</button>
                 <input type="hidden" name="clock_action" id="clock_action">
                 <input type="hidden" name="open_shift_id" id="open_shift_id">
+                <input type="hidden" name="wage_enabled" value="' . esc_attr(get_option("aio_wage_manage")) . '">
+                <input type="hidden" name="employee" id="employee" value="' . esc_attr($current_user->ID) . '">
             </div>
         </div>
         <div class="shift-details">

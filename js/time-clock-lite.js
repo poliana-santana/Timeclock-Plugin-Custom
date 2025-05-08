@@ -226,7 +226,7 @@ jQuery(document).ready(function () {
 
 function myTimer() {
   var d = new Date();
-  document.getElementById("jsTimer").innerHTML = "<strong>" + timeClockAjax.currentTime + ":</strong> " + d.toLocaleTimeString();
+  document.getElementById("jsTimer").innerHTML = "<strong>" + timeClockAjax.currentTime + "</strong> <div>" + d.toLocaleTimeString() + "</div>";
 }
 
 function employeProfileSearch() {

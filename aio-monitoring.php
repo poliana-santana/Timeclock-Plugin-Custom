@@ -11,7 +11,7 @@
             <tr>
                 <th class="manage-column column-columnname" scope="col"><strong><?php echo esc_attr_x('Employee Name', 'aio-time-clock-lite'); ?></strong></th>
                 <th class="manage-column column-columnname" scope="col"><strong><?php echo esc_attr_x('Department', 'aio-time-clock-lite'); ?></strong></th>
-                <th class="manage-column column-columnname" scope="col"><strong><?php echo esc_attr_x('Clock In Time', 'aio-time-clock-lite'); ?></strong></th>
+                <th class="manage-column column-columnname" scope="col"><strong><?php echo esc_attr_x('Clock In', 'aio-time-clock-lite'); ?></strong></th>
                 <th class="manage-column column-columnname" scope="col"><strong><?php echo esc_attr_x('IP Address', 'aio-time-clock-lite'); ?></strong></th>
                 <?php do_action("aio_new_report_column_heading"); ?>
                 <th class="manage-column column-columnname" scope="col"><strong><?php echo esc_attr_x('Status', 'aio-time-clock-lite'); ?></strong></th>
@@ -22,7 +22,7 @@
             <tr>
                 <th class="manage-column column-columnname" scope="col"><strong><?php echo esc_attr_x('Employee Name', 'aio-time-clock-lite'); ?></strong></th>
                 <th class="manage-column column-columnname" scope="col"><strong><?php echo esc_attr_x('Department', 'aio-time-clock-lite'); ?></strong></th>
-                <th class="manage-column column-columnname" scope="col"><strong><?php echo esc_attr_x('Clock In Time', 'aio-time-clock-lite'); ?></strong></th>
+                <th class="manage-column column-columnname" scope="col"><strong><?php echo esc_attr_x('Clock In', 'aio-time-clock-lite'); ?></strong></th>
                 <th class="manage-column column-columnname" scope="col"><strong><?php echo esc_attr_x('IP Address', 'aio-time-clock-lite'); ?></strong></th>
                 <?php do_action("aio_new_report_column_heading"); ?>
                 <th class="manage-column column-columnname" scope="col"><strong><?php echo esc_attr_x('Status', 'aio-time-clock-lite'); ?></strong></th>

@@ -121,11 +121,14 @@ jQuery(function () {
 });
 
 function editClockTime(type) {
-  if (type == "in") {
+  if (type === "in") {
     jQuery("#clock_in").show("fast");
-  }
-  if (type == "out") {
+  } else if (type === "out") {
     jQuery("#clock_out").show("fast");
+  } else if (type === "break_in") {
+    jQuery("#break_in").show("fast");
+  } else if (type === "break_out") {
+    jQuery("#break_out").show("fast");
   }
 }
 

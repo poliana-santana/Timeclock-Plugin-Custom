@@ -19,11 +19,11 @@ if (is_user_logged_in() == true) {
 
     <table id="employeeProfileTable">
     <tr class="header">
-        <th style="width:20%;"><?php echo esc_attr_x('Name', 'aio-time-clock-lite'); ?></th>
+        <th style="width:20%;"><?php echo esc_attr_x('Date', 'aio-time-clock-lite'); ?></th>
         <th style="width:20%;"><?php echo esc_attr_x('Clock In', 'aio-time-clock-lite'); ?></th>
-        <th style="width:20%;"><?php echo esc_attr_x('Break In', 'aio-time-clock-lite'); ?></th>
-        <th style="width:20%;"><?php echo esc_attr_x('Break Out', 'aio-time-clock-lite'); ?></th>
         <th style="width:20%;"><?php echo esc_attr_x('Clock Out', 'aio-time-clock-lite'); ?></th>
+        <th style="width:20%;"><?php echo esc_attr_x('On Break', 'aio-time-clock-lite'); ?></th>
+        <th style="width:20%;"><?php echo esc_attr_x('Off Break', 'aio-time-clock-lite'); ?></th>
         <th style="width:20%;"><?php echo esc_attr_x('Total', 'aio-time-clock-lite'); ?></th>
     </tr>
     <?php $loop = new WP_Query(array('post_type' => 'shift', 'author' => $current_user->ID, 'posts_per_page' => -1));?>
@@ -34,16 +34,15 @@ if (is_user_logged_in() == true) {
                     $employee_clock_out_time = isset($custom["employee_clock_out_time"][0]) ? sanitize_text_field($custom["employee_clock_out_time"][0]) : null;
                     $break_in_time = isset($custom["break_in_time"][0]) ? sanitize_text_field($custom["break_in_time"][0]) : null;
                     $break_out_time = isset($custom["break_out_time"][0]) ? sanitize_text_field($custom["break_out_time"][0]) : null;
+                    $shift_date = $employee_clock_in_time ? date('Y-m-d', strtotime($employee_clock_in_time)) : esc_attr_x('N/A', 'aio-time-clock-lite');
                     $shift_sum = '00:00';
-                    $author_id = intval(get_the_author_meta('ID'));
                     ?>
                     <tr valign="top">
-                        <td scope="row"><?php echo esc_attr($this->getEmployeeName($author_id)); ?></td>
+                        <td scope="row"><?php echo esc_attr($shift_date); ?></td>
                         <td>
                             <?php
                             if ($employee_clock_in_time != null) {
-                                $newDate = $this->cleanDate($employee_clock_in_time);
-                                echo esc_attr($newDate);
+                                echo esc_attr(date('h:i A', strtotime($employee_clock_in_time)));
                             } else {
                                 echo esc_attr_x('Clock In Empty', 'aio-time-clock-lite');
                             }
@@ -51,8 +50,17 @@ if (is_user_logged_in() == true) {
                         </td>
                         <td>
                             <?php
+                            if ($employee_clock_out_time != null) {
+                                echo esc_attr(date('h:i A', strtotime($employee_clock_out_time)));
+                            } else {
+                                echo esc_attr_x('Clock Out Empty', 'aio-time-clock-lite');
+                            }
+                            ?>
+                        </td>
+                        <td>
+                            <?php
                             if ($break_in_time != null) {
-                                echo esc_attr($this->cleanDate($break_in_time));
+                                echo esc_attr(date('h:i A', strtotime($break_in_time)));
                             } else {
                                 echo esc_attr_x('-', 'aio-time-clock-lite');
                             }
@@ -61,7 +69,7 @@ if (is_user_logged_in() == true) {
                         <td>
                             <?php
                             if ($break_out_time != null) {
-                                echo esc_attr($this->cleanDate($break_out_time));
+                                echo esc_attr(date('h:i A', strtotime($break_out_time)));
                             } else {
                                 echo esc_attr_x('-', 'aio-time-clock-lite');
                             }
@@ -69,19 +77,7 @@ if (is_user_logged_in() == true) {
                         </td>
                         <td>
                             <?php 
-                                if ($employee_clock_out_time != null){
-                                    $outDate = $this->cleanDate($employee_clock_out_time);
-                                        echo esc_attr($outDate);
-                                } 
-                                else {
-                                        echo esc_attr_x('Clock Out Empty', 'aio-time-clock-lite');
-                                }
-                            ?>
-                        </td>
-                        <td>
-                            <?php 
                                 if ($employee_clock_in_time != null && $employee_clock_out_time != null) {
-                                    // Use getShiftTotal for consistent calculation
                                     $shift_sum = $this->secondsToTime($this->getShiftTotal(get_the_ID()));
                                     $shift_total_time = $this->addTwoTimes($shift_total_time, $shift_sum);
                                     echo esc_attr($shift_sum);

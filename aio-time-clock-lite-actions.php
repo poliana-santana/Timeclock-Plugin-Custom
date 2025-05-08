@@ -451,7 +451,7 @@ class AIO_Time_Clock_Lite_Actions
                 update_post_meta($open_shift_id, 'break_in_time', sanitize_text_field($current_time["current_time"]));
                 echo json_encode(array(
                     "response" => "success",
-                    "message" => esc_attr_x('Break In recorded successfully', 'aio-time-clock-lite'),
+                    "message" => esc_attr_x('On Break recorded successfully', 'aio-time-clock-lite'),
                     "break_in_time" => $this->cleanDate(sanitize_text_field($current_time["current_time"])),
                     "break_recorded" => false // Break out not yet recorded
                 ));
@@ -460,7 +460,7 @@ class AIO_Time_Clock_Lite_Actions
                 update_post_meta($open_shift_id, 'break_out_time', sanitize_text_field($current_time["current_time"]));
                 echo json_encode(array(
                     "response" => "success",
-                    "message" => esc_attr_x('Break Out recorded successfully', 'aio-time-clock-lite'),
+                    "message" => esc_attr_x('Off Break recorded successfully', 'aio-time-clock-lite'),
                     "break_out_time" => $this->cleanDate(sanitize_text_field($current_time["current_time"])),
                     "break_recorded" => true // Break in and out both recorded
                 ));
@@ -733,10 +733,10 @@ class AIO_Time_Clock_Lite_Actions
         unset($columns['author']);
         $columns['employee']                = esc_attr_x('Employee', 'aio-time-clock-lite');
         $columns['department']              = esc_attr_x('Department', 'aio-time-clock-lite');
-        $columns['employee_clock_in_time']  = esc_attr_x('Clock In Time', 'aio-time-clock-lite');
-        $columns['break_in_time'] = esc_attr_x('Break In Time', 'aio-time-clock-lite');
-        $columns['break_out_time'] = esc_attr_x('Break Out Time', 'aio-time-clock-lite');
-        $columns['employee_clock_out_time'] = esc_attr_x('Clock Out Time', 'aio-time-clock-lite');
+        $columns['employee_clock_in_time']  = esc_attr_x('Clock In', 'aio-time-clock-lite');
+        $columns['break_in_time'] = esc_attr_x('On Break', 'aio-time-clock-lite');
+        $columns['break_out_time'] = esc_attr_x('Off Break', 'aio-time-clock-lite');
+        $columns['employee_clock_out_time'] = esc_attr_x('Clock Out', 'aio-time-clock-lite');
         $columns['total_shift_time']        = esc_attr_x('Total Time', 'aio-time-clock-lite');
         return $columns;
     }
@@ -1556,7 +1556,7 @@ class AIO_Time_Clock_Lite_Actions
             'Nonce'             => wp_create_nonce("time-clock-nonce"),
             'ajaxurl'           => admin_url('admin-ajax.php'),
             'isClockedIn'       => esc_attr_x('You are currently clocked in', 'aio-time-clock-lite'),
-            'clockInTime'       => esc_attr_x('Clock In Time', 'aio-time-clock-lite'),
+            'clockInTime'       => esc_attr_x('Clock In', 'aio-time-clock-lite'),
             'updateNote'        => esc_attr_x('Update Note', 'aio-time-clock-lite'),
             'addNote'           => esc_attr_x('Add Note', 'aio-time-clock-lite'),
             'clockInMessage'    => esc_attr_x('Clock in to start your shift', 'aio-time-clock-lite'),
