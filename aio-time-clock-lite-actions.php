@@ -139,7 +139,7 @@ class AIO_Time_Clock_Lite_Actions
 
     public function addMenuItem()
     {
-        $page_hook_suffix = add_menu_page('Time Clock Lite', 'Time Clock Lite', 'edit_posts', 'aio-tc-lite', [$this, 'settingsPageLite'], 'dashicons-clock');
+        $page_hook_suffix = add_menu_page('Time Clock Lite +', 'Time Clock Lite +', 'edit_posts', 'aio-tc-lite', [$this, 'settingsPageLite'], 'dashicons-clock');
         add_submenu_page('aio-tc-lite', esc_attr_x('Settings', 'aio-time-clock-lite'), esc_attr_x('Settings', 'aio-time-clock-lite'), 'edit_posts', 'aio-tc-lite', [$this, 'settingsPageLite']);
         add_submenu_page('aio-tc-lite', esc_attr_x('Real Time Monitoring', 'aio-time-clock-lite'), esc_attr_x('Real Time Monitoring', 'aio-time-clock-lite'), 'edit_posts', 'aio-monitoring-sub', [$this, 'montioringPage']);
         add_submenu_page('aio-tc-lite', esc_attr_x('Employees', 'aio-time-clock-lite'), esc_attr_x('Employees', 'aio-time-clock-lite'), 'edit_posts', 'aio-employees-sub', [$this, 'employeePage']);
