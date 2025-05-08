@@ -57,6 +57,7 @@ jQuery(document).ready(function () {
         success: function (response) {
           var o_shift = response["open_shift_id"];
           var is_clocked_in = response["is_clocked_in"];
+          var on_break = response["on_break"]; // New field for break state
           var new_clock_action = "";
           if (is_clocked_in) {
             new_clock_action = "clock_out";
@@ -67,6 +68,14 @@ jQuery(document).ready(function () {
               '<i>' + timeClockAjax.isClockedIn + '</i><br /><strong>' + timeClockAjax.clockInTime + ':</strong> ' + response['employee_clock_in_time']
             );
 
+            // Update break button visibility
+            if (on_break) {
+              jQuery("#aio_break_in_button").hide();
+              jQuery("#aio_break_out_button").show();
+            } else {
+              jQuery("#aio_break_in_button").show();
+              jQuery("#aio_break_out_button").hide();
+            }
           }
           else {
             new_clock_action = "clock_in";
@@ -170,6 +179,15 @@ jQuery(document).ready(function () {
         jQuery("#aio_break_in_button").hide();
         jQuery("#aio_break_out_button").show();
         jQuery("#clockMessage").html('<i>' + response.message + '</i>');
+
+        // Hide both break buttons if break_recorded is true
+        if (response.break_recorded) {
+          jQuery("#aio_break_in_button").hide();
+          jQuery("#aio_break_out_button").hide();
+        }
+
+        // Refresh the shift details table
+        refreshShiftDetails();
       }
     });
   });
@@ -192,6 +210,15 @@ jQuery(document).ready(function () {
         jQuery("#aio_break_in_button").show();
         jQuery("#aio_break_out_button").hide();
         jQuery("#clockMessage").html('<i>' + response.message + '</i>');
+
+        // Hide both break buttons if break_recorded is true
+        if (response.break_recorded) {
+          jQuery("#aio_break_in_button").hide();
+          jQuery("#aio_break_out_button").hide();
+        }
+
+        // Refresh the shift details table
+        refreshShiftDetails();
       }
     });
   });
@@ -234,7 +261,7 @@ function refreshShiftDetails() {
       nonce: timeClockAjax.Nonce
     },
     success: function (response) {
-      jQuery(".shift-details tbody").html(response);
+      jQuery("#shift-details-body").html(response);
     }
   });
 }

@@ -7,9 +7,7 @@ global $wpdb;
 $current_user = wp_get_current_user();
 $profile_button = null;
 $eprofile_page = $this->check_eprofile_shortcode_lite();
-if ($eprofile_page != null){
-    $profile_button = '<button class="clock-button aioUserButton" href="' . esc_url(get_permalink($eprofile_page)) . '">' . esc_attr_x("Employee Profile", 'aio-time-clock-lite') . '</button>';
-}
+$tc = new AIO_Time_Clock_Lite_Actions();
 
 if (get_current_user_id() > 0){
     $template .= 
@@ -27,8 +25,6 @@ if (get_current_user_id() > 0){
                 <button id="aio_break_in_button" style="display:none;" class="clock-button break_in">' . esc_attr_x("Break In", 'aio-time-clock-lite') . '</button>
                 <button id="aio_break_out_button" style="display:none;" class="clock-button break_out">' . esc_attr_x("Break Out", 'aio-time-clock-lite') . '</button>
                 <button style="display:none;" id="newShift" class="clock-button clock_in" href="' . esc_url(get_permalink($tc_page)) .'"> ' . esc_attr_x("New Shift", 'aio-time-clock-lite') . '</button>
-                ' . $profile_button . '
-                <button class="clock-button aioUserButton" href="' . esc_url(wp_logout_url()) . '">' . esc_attr_x("Logout", 'aio-time-clock-lite') . '</button>
                 <input type="hidden" name="clock_action" id="clock_action">
                 <input type="hidden" name="open_shift_id" id="open_shift_id">
                 <input type="hidden" name="wage_enabled" value="' . esc_attr(get_option("aio_wage_manage")) . '">
@@ -37,19 +33,13 @@ if (get_current_user_id() > 0){
         </div>
         <div class="shift-details">
             <h2>' . esc_attr_x("Shift Details", 'aio-time-clock-lite') . '</h2>
-            <table>
+            <table class="shift-summary">
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Clock In</th>
-                        <th>Clock Out</th>
-                        <th>Total Shift Hour</th>
-                        <th>On Break</th>
-                        <th>Off Break</th>
-                        <th>Total Hour</th>
+                        <th colspan="4">Date: <span id="shift-date">' . date('m / d / Y') . '</span></th>
                     </tr>
                 </thead>
-                <tbody>';
+                <tbody id="shift-details-body">';
                 $today = date('Y-m-d');
                 $shifts = new WP_Query(array(
                     'post_type' => 'shift',
@@ -63,32 +53,49 @@ if (get_current_user_id() > 0){
                         )
                     )
                 ));
+                $break_in_time = null;
+                $break_out_time = null;
                 if ($shifts->have_posts()) {
                     while ($shifts->have_posts()) {
                         $shifts->the_post();
                         $custom = get_post_custom(get_the_ID());
-                        if (strpos($custom['employee_clock_in_time'][0], $today) !== false) {
-                            $template .= '<tr>
-                                <td>' . esc_html(date('m / d / Y', strtotime($custom['employee_clock_in_time'][0]))) . '</td>
-                                <td>' . esc_html($custom['employee_clock_in_time'][0] ?? '-- : -- : --') . '</td>
-                                <td>' . esc_html($custom['employee_clock_out_time'][0] ?? '-- : -- : --') . '</td>
-                                <td>' . esc_html($custom['total_shift_time'][0] ?? '-- : -- : --') . '</td>
-                                <td>' . esc_html($custom['break_in_time'][0] ?? '-- : -- : --') . '</td>
-                                <td>' . esc_html($custom['break_out_time'][0] ?? '-- : -- : --') . '</td>
-                                <td>' . esc_html($custom['total_hour'][0] ?? '-- : -- : --') . '</td>
-                            </tr>';
-                        }
+                        $break_in_time = $custom['break_in_time'][0] ?? null;
+                        $break_out_time = $custom['break_out_time'][0] ?? null;
+
+                        $template .= '
+                        <tr>
+                            <td>Clock In</td>
+                            <td>' . esc_html($custom['employee_clock_in_time'][0] ?? '-- : -- : --') . '</td>
+                            <td>On Break</td>
+                            <td>' . esc_html($break_in_time ?? '-- : -- : --') . '</td>
+                        </tr>
+                        <tr>
+                            <td>Clock Out</td>
+                            <td>' . esc_html($custom['employee_clock_out_time'][0] ?? '-- : -- : --') . '</td>
+                            <td>Off Break</td>
+                            <td>' . esc_html($break_out_time ?? '-- : -- : --') . '</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">Shift Duration: <span>' . esc_html($tc->secondsToTime($tc->getShiftTotal(get_the_ID())) ?? '-- : -- : --') . '</span></td>
+                        </tr>';
                     }
                     wp_reset_postdata();
                 } else {
-                    $template .= '<tr>
-                        <td>' . date('m / d / Y') . '</td>
+                    $template .= '
+                    <tr>
+                        <td>Clock In</td>
                         <td>-- : -- : --</td>
+                        <td>On Break</td>
                         <td>-- : -- : --</td>
+                    </tr>
+                    <tr>
+                        <td>Clock Out</td>
                         <td>-- : -- : --</td>
+                        <td>Off Break</td>
                         <td>-- : -- : --</td>
-                        <td>-- : -- : --</td>
-                        <td>-- : -- : --</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Shift Duration: <span>-- : -- : --</span></td>
                     </tr>';
                 }
                 $template .= '</tbody>

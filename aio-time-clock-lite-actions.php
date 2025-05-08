@@ -301,36 +301,51 @@ class AIO_Time_Clock_Lite_Actions
                         $shifts->the_post();
                         $custom = get_post_custom(get_the_ID());
                         if (strpos($custom['employee_clock_in_time'][0], $today) !== false) {
-                            echo '<tr>
-                                <td>' . esc_html(date('m / d / Y', strtotime($custom['employee_clock_in_time'][0]))) . '</td>
+                            echo '
+                            <tr>
+                                <td>Clock In</td>
                                 <td>' . esc_html($custom['employee_clock_in_time'][0] ?? '-- : -- : --') . '</td>
-                                <td>' . esc_html($custom['employee_clock_out_time'][0] ?? '-- : -- : --') . '</td>
-                                <td>' . esc_html($custom['total_shift_time'][0] ?? '-- : -- : --') . '</td>
+                                <td>On Break</td>
                                 <td>' . esc_html($custom['break_in_time'][0] ?? '-- : -- : --') . '</td>
+                            </tr>
+                            <tr>
+                                <td>Clock Out</td>
+                                <td>' . esc_html($custom['employee_clock_out_time'][0] ?? '-- : -- : --') . '</td>
+                                <td>Off Break</td>
                                 <td>' . esc_html($custom['break_out_time'][0] ?? '-- : -- : --') . '</td>
-                                <td>' . esc_html($custom['total_hour'][0] ?? '-- : -- : --') . '</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">Shift Duration: <span>' . esc_html($custom['total_shift_time'][0] ?? '-- : -- : --') . '</span></td>
                             </tr>';
                         }
                     }
                     wp_reset_postdata();
                 } else {
-                    echo '<tr>
-                        <td>' . date('m / d / Y') . '</td>
+                    echo '
+                    <tr>
+                        <td>Clock In</td>
                         <td>-- : -- : --</td>
+                        <td>On Break</td>
                         <td>-- : -- : --</td>
+                    </tr>
+                    <tr>
+                        <td>Clock Out</td>
                         <td>-- : -- : --</td>
+                        <td>Off Break</td>
                         <td>-- : -- : --</td>
-                        <td>-- : -- : --</td>
-                        <td>-- : -- : --</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Shift Duration: <span>-- : -- : --</span></td>
                     </tr>';
                 }
                 wp_die();
             } elseif ($clock_action == "check_shifts") {
-            $found_shift_id = null;
-            $args = array(
-                'post_type' => 'shift',
-                'orderby' => 'ID'
-            );
+                $found_shift_id = null;
+                $on_break = false; // Track break state
+                $args = array(
+                    'post_type' => 'shift',
+                    'orderby' => 'ID'
+                );
 
                 $query = new WP_Query($args);
 
@@ -341,9 +356,17 @@ class AIO_Time_Clock_Lite_Actions
                         $author_id               = get_post_field('post_author', $query->post->ID);
                         $employee_clock_in_time  = (isset($custom["employee_clock_in_time"][0])) ? sanitize_text_field($custom["employee_clock_in_time"][0]) : null;
                         $employee_clock_out_time = (isset($custom["employee_clock_out_time"][0])) ? sanitize_text_field($custom["employee_clock_out_time"][0]) : null;
+                        $break_in_time = (isset($custom["break_in_time"][0])) ? sanitize_text_field($custom["break_in_time"][0]) : null;
+                        $break_out_time = (isset($custom["break_out_time"][0])) ? sanitize_text_field($custom["break_out_time"][0]) : null;
+
                         if ($employee_clock_in_time != null && $employee_clock_out_time == null && $employee == $author_id) {
                             $found_shift_id = $query->post->ID;
                             $is_clocked_in  = true;
+
+                            // Determine if the user is currently on a break
+                            if ($break_in_time != null && $break_out_time == null) {
+                                $on_break = true;
+                            }
                             break;
                         }
                     }
@@ -358,7 +381,8 @@ class AIO_Time_Clock_Lite_Actions
                         "is_clocked_in"           => $is_clocked_in,
                         "open_shift_id"           => $found_shift_id,
                         "employee_clock_in_time"  => (($employee_clock_in_time != null) ? $this->cleanDate($employee_clock_in_time) : null),
-                        "employee_clock_out_time" => (($employee_clock_in_time != null) ? $this->cleanDate($employee_clock_out_time) : null),
+                        "employee_clock_out_time" => (($employee_clock_out_time != null) ? $this->cleanDate($employee_clock_out_time) : null),
+                        "on_break"                => $on_break, // Include break state
                     ]
                 );
             } elseif ($clock_action == "clock_in") {
@@ -429,6 +453,7 @@ class AIO_Time_Clock_Lite_Actions
                     "response" => "success",
                     "message" => esc_attr_x('Break In recorded successfully', 'aio-time-clock-lite'),
                     "break_in_time" => $this->cleanDate(sanitize_text_field($current_time["current_time"])),
+                    "break_recorded" => false // Break out not yet recorded
                 ));
             } elseif ($clock_action == "break_out") {
                 $current_time = $this->getCurrentTime();
@@ -437,6 +462,7 @@ class AIO_Time_Clock_Lite_Actions
                     "response" => "success",
                     "message" => esc_attr_x('Break Out recorded successfully', 'aio-time-clock-lite'),
                     "break_out_time" => $this->cleanDate(sanitize_text_field($current_time["current_time"])),
+                    "break_recorded" => true // Break in and out both recorded
                 ));
             } else {
                 echo json_encode(
@@ -1523,7 +1549,7 @@ class AIO_Time_Clock_Lite_Actions
             'clockInTime'       => esc_attr_x('Clock In Time', 'aio-time-clock-lite'),
             'updateNote'        => esc_attr_x('Update Note', 'aio-time-clock-lite'),
             'addNote'           => esc_attr_x('Add Note', 'aio-time-clock-lite'),
-            'clockInMessage'    => esc_attr_x('Click CLOCK IN to START your shift', 'aio-time-clock-lite'),
+            'clockInMessage'    => esc_attr_x('Clock in to start your shift', 'aio-time-clock-lite'),
             'locationError'     => esc_attr_x('Location Required', 'aio-time-clock-lite'),
             'clockedOutMessage' => esc_attr_x('You have been clocked out', 'aio-time-clock-lite'),
             'clockOutFail'      => esc_attr_x('Clock out failed', 'aio-time-clock-lite'),
