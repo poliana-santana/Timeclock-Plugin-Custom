@@ -805,6 +805,16 @@ class AIO_Time_Clock_Lite_Actions
         $break_in_time = get_post_meta($post_id, 'break_in_time', true);
         $break_out_time = get_post_meta($post_id, 'break_out_time', true);
         $total_shift_time = strtotime(0);
+
+        // Ensure shift does not span two days
+        if ($employee_clock_in_time != null && $employee_clock_out_time == null) {
+            $clock_in_date = date('Y-m-d', strtotime($employee_clock_in_time));
+            $current_date = date('Y-m-d');
+            if ($clock_in_date != $current_date) {
+                $employee_clock_out_time = null; // Set clock-out to empty
+            }
+        }
+
         if ($employee_clock_in_time != null && $employee_clock_out_time != null) {
             if (strtotime($employee_clock_in_time) > strtotime(0) && strtotime($employee_clock_out_time) > strtotime(0)) {
                 // Calculate total shift duration

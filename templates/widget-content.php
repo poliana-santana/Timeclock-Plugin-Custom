@@ -60,6 +60,7 @@ if (is_user_logged_in()){
                         $custom = get_post_custom(get_the_ID());
                         $break_in_time = $custom['break_in_time'][0] ?? null;
                         $break_out_time = $custom['break_out_time'][0] ?? null;
+                        $shift_duration = $tc->secondsToTime($tc->getShiftTotal(get_the_ID()));
 
                         $template .= '
                         <tr>
@@ -75,7 +76,7 @@ if (is_user_logged_in()){
                             <td>' . esc_html($break_out_time ?? '-- : -- : --') . '</td>
                         </tr>
                         <tr>
-                            <td colspan="4">Shift Duration: <span>' . esc_html($tc->secondsToTime($tc->getShiftTotal(get_the_ID())) ?? '-- : -- : --') . '</span></td>
+                            <td colspan="4">Shift Duration: <span>' . esc_html($shift_duration ?? '-- : -- : --') . '</span></td>
                         </tr>';
                     }
                     wp_reset_postdata();
