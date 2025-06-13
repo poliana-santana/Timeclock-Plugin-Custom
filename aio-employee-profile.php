@@ -10,11 +10,6 @@ if (is_user_logged_in() == true) {
     $tc_page = $this->aio_check_tc_shortcode_lite();
     ?>
     <table>
-    <?php 
-    if ($tc_page != null){
-        echo '<a class="button btn" href="' . esc_url(get_permalink($tc_page)) . '">' . esc_attr_x('Back to Time Clock', 'aio-time-clock-lite') . '</a>';
-    }
-    ?>
     <!--<input type="text" id="employeeProfileInput" onkeyup="employeProfileSearch()" placeholder="Filter shifts..">-->
 
     <table id="employeeProfileTable">
