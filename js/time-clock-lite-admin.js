@@ -54,6 +54,8 @@ jQuery(function () {
             '<tr>' +
             '<th id="columnname" class="manage-column column-columnname" scope="col"><strong>' + timeClockAdminAjax.Name + '</strong></th>' +
             '<th id="columnname" class="manage-column column-columnname" scope="col"><strong>' + timeClockAdminAjax.clockIn + '</strong></th>' +
+            '<th id="columnname" class="manage-column column-columnname" scope="col"><strong>' + timeClockAdminAjax.breakIn + '</strong></th>' +
+            '<th id="columnname" class="manage-column column-columnname" scope="col"><strong>' + timeClockAdminAjax.breakOut + '</strong></th>' +
             '<th id="columnname" class="manage-column column-columnname" scope="col"><strong>' + timeClockAdminAjax.clockOut + '</strong></th>' +
             '<th id="columnname" class="manage-column column-columnname" scope="col"><strong>' + timeClockAdminAjax.ShiftTotal + '</strong></th>' +
             '</tr>' +
@@ -66,23 +68,18 @@ jQuery(function () {
             if (isEven(count)) {
               alternate_class = 'alternate';
             }
-            var employee_clock_in_time = "";
-            if (item["employee_clock_in_time"] != null) {
-              employee_clock_in_time = item["employee_clock_in_time"];
-            }
-            var employee_clock_out_time = "";
-            if (item["employee_clock_out_time"] != null) {
-              employee_clock_out_time = item["employee_clock_out_time"];
-            }
-            var shift_sum = "";
-            if (item["shift_sum"]) {
-              shift_sum = item["shift_sum"];
-            }
+            var employee_clock_in_time = item["employee_clock_in_time"] || "";
+            var break_in_time = item["break_in_time"] || "";
+            var break_out_time = item["break_out_time"] || "";
+            var employee_clock_out_time = item["employee_clock_out_time"] || "";
+            var shift_sum = item["shift_sum"] || "";
 
             reportHtml +=
               '<tr class="' + alternate_class + '">' +
               '<td>' + item["last_name"] + ', ' + item["first_name"] + '</td>' +
               '<td>' + employee_clock_in_time + '</td>' +
+              '<td>' + break_in_time + '</td>' +
+              '<td>' + break_out_time + '</td>' +
               '<td>' + employee_clock_out_time + '</td>' +
               '<td>' + shift_sum + '</td>' +
               '</tr>';

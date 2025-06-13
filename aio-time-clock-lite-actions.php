@@ -304,7 +304,6 @@ class AIO_Time_Clock_Lite_Actions
                         $break_out_time = $custom['break_out_time'][0] ?? null;
                         $shift_duration = $this->secondsToTime($this->getShiftTotal(get_the_ID()));
 
-                        // Format times to h:i A or fallback
                         $clock_in = !empty($custom['employee_clock_in_time'][0]) ? date('h:i A', strtotime($custom['employee_clock_in_time'][0])) : '-- : -- : --';
                         $clock_out = !empty($custom['employee_clock_out_time'][0]) ? date('h:i A', strtotime($custom['employee_clock_out_time'][0])) : '-- : -- : --';
                         $break_in = !empty($break_in_time) ? date('h:i A', strtotime($break_in_time)) : '-- : -- : --';
@@ -1579,6 +1578,8 @@ class AIO_Time_Clock_Lite_Actions
             'currentTime'       => esc_attr_x('Current Time', 'aio-time-clock-lite'),
             'clockIn'           => esc_attr_x('Clock In', 'aio-time-clock-lite'),
             'clockOut'          => esc_attr_x('Clock Out', 'aio-time-clock-lite'),
+            'breakIn'           => esc_attr_x('On Break', 'aio-time-clock-lite'),
+            'breakOut'          => esc_attr_x('Off Break', 'aio-time-clock-lite'),
             'Name'              => esc_attr_x('Name', 'aio-time-clock-lite'),
             'Options'           => esc_attr_x('Options', 'aio-time-clock-lite'),
             'ShiftTotal'        => esc_attr_x('Shift Total', 'aio-time-clock-lite'),
