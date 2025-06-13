@@ -115,6 +115,59 @@ jQuery(function () {
     });
   });
 
+  // Export to CSV
+  jQuery(document).on('click', '#aio_export_csv', function (e) {
+    e.preventDefault();
+    var $table = jQuery("#aio-reports-results table:visible");
+    if ($table.length === 0) {
+      Swal.fire({icon: 'info', title: 'No report to export'});
+      return;
+    }
+    var csv = [];
+    $table.find('tr').each(function () {
+      var row = [];
+      jQuery(this).find('th,td').each(function () {
+        var text = jQuery(this).text().replace(/"/g, '""');
+        row.push('"' + text + '"');
+      });
+      csv.push(row.join(','));
+    });
+
+    // Extract summary values cleanly
+    var totalShifts = "";
+    var totalShiftTime = "";
+    jQuery("#aio-reports-results .controlDiv strong").each(function () {
+      var label = jQuery(this).text().trim();
+      var value = jQuery(this)[0].nextSibling && jQuery(this)[0].nextSibling.nodeType === 3
+        ? jQuery(this)[0].nextSibling.nodeValue.trim()
+        : "";
+      if (label === timeClockAdminAjax.TotalShifts + ":") {
+        totalShifts = value;
+      }
+      if (label === timeClockAdminAjax.TotalShiftTime + ":") {
+        totalShiftTime = value;
+      }
+    });
+
+    if (totalShifts) {
+      csv.push('"Total Shifts:","' + totalShifts + '"');
+    }
+    if (totalShiftTime) {
+      csv.push('"Total Shift Time:","' + totalShiftTime + '"');
+    }
+
+    var csvContent = csv.join('\n');
+    var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    var link = document.createElement("a");
+    var url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", "timeclock-report.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  });
+
 });
 
 function editClockTime(type) {

@@ -16,7 +16,10 @@ $update_reports_file = plugin_dir_url(__FILE__) . '/inc/update_aio_reports.php';
         <?php echo $this->getEmployeeSelect(); ?>
     </select>
     <a id="aio_generate_report" href="<?php echo esc_url($link); ?>" class="button-primary"><?php echo esc_attr_x('Submit', 'aio-time-clock-lite'); ?></a>
+    <button id="aio_export_csv" class="button" style="margin-left:10px;"><?php echo esc_attr_x('Export to CSV', 'aio-time-clock-lite'); ?></button>
 </div>
 <div id="report-response" style="display:none;padding:40px;"></div>
-<div id="aio-reports-results" style="display:none;"></div>
+<div id="aio-reports-results" style="display:none;">
+    <!-- The report table gets rendered here by JS -->
+</div>
 <input type="hidden" name="wage_enabled" id="wage_enabled" value="<?php echo esc_attr(get_option("aio_wage_manage")); ?>">
