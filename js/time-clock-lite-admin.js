@@ -54,6 +54,8 @@ jQuery(function () {
             '<tr>' +
             '<th id="columnname" class="manage-column column-columnname" scope="col"><strong>' + timeClockAdminAjax.Name + '</strong></th>' +
             '<th id="columnname" class="manage-column column-columnname" scope="col"><strong>' + timeClockAdminAjax.clockIn + '</strong></th>' +
+            '<th id="columnname" class="manage-column column-columnname" scope="col"><strong>' + timeClockAdminAjax.breakIn + '</strong></th>' +
+            '<th id="columnname" class="manage-column column-columnname" scope="col"><strong>' + timeClockAdminAjax.breakOut + '</strong></th>' +
             '<th id="columnname" class="manage-column column-columnname" scope="col"><strong>' + timeClockAdminAjax.clockOut + '</strong></th>' +
             '<th id="columnname" class="manage-column column-columnname" scope="col"><strong>' + timeClockAdminAjax.ShiftTotal + '</strong></th>' +
             '</tr>' +
@@ -66,23 +68,18 @@ jQuery(function () {
             if (isEven(count)) {
               alternate_class = 'alternate';
             }
-            var employee_clock_in_time = "";
-            if (item["employee_clock_in_time"] != null) {
-              employee_clock_in_time = item["employee_clock_in_time"];
-            }
-            var employee_clock_out_time = "";
-            if (item["employee_clock_out_time"] != null) {
-              employee_clock_out_time = item["employee_clock_out_time"];
-            }
-            var shift_sum = "";
-            if (item["shift_sum"]) {
-              shift_sum = item["shift_sum"];
-            }
+            var employee_clock_in_time = item["employee_clock_in_time"] || "";
+            var break_in_time = item["break_in_time"] || "";
+            var break_out_time = item["break_out_time"] || "";
+            var employee_clock_out_time = item["employee_clock_out_time"] || "";
+            var shift_sum = item["shift_sum"] || "";
 
             reportHtml +=
               '<tr class="' + alternate_class + '">' +
               '<td>' + item["last_name"] + ', ' + item["first_name"] + '</td>' +
               '<td>' + employee_clock_in_time + '</td>' +
+              '<td>' + break_in_time + '</td>' +
+              '<td>' + break_out_time + '</td>' +
               '<td>' + employee_clock_out_time + '</td>' +
               '<td>' + shift_sum + '</td>' +
               '</tr>';
@@ -116,6 +113,74 @@ jQuery(function () {
         }
       }
     });
+  });
+
+  // Export to CSV
+  jQuery(document).on('click', '#aio_export_csv', function (e) {
+    e.preventDefault();
+    var $table = jQuery("#aio-reports-results table:visible");
+    if ($table.length === 0) {
+      Swal.fire({icon: 'info', title: 'No report to export'});
+      return;
+    }
+    var csv = [];
+    $table.find('tr').each(function () {
+      var row = [];
+      jQuery(this).find('th,td').each(function () {
+        var text = jQuery(this).text().replace(/"/g, '""');
+        row.push('"' + text + '"');
+      });
+      csv.push(row.join(','));
+    });
+
+    // Extract summary values cleanly
+    var totalShifts = "";
+    var totalShiftTime = "";
+    jQuery("#aio-reports-results .controlDiv strong").each(function () {
+      var label = jQuery(this).text().trim();
+      var value = jQuery(this)[0].nextSibling && jQuery(this)[0].nextSibling.nodeType === 3
+        ? jQuery(this)[0].nextSibling.nodeValue.trim()
+        : "";
+      if (label === timeClockAdminAjax.TotalShifts + ":") {
+        totalShifts = value;
+      }
+      if (label === timeClockAdminAjax.TotalShiftTime + ":") {
+        totalShiftTime = value;
+      }
+    });
+
+    if (totalShifts) {
+      csv.push('"Total Shifts:","' + totalShifts + '"');
+    }
+    if (totalShiftTime) {
+      csv.push('"Total Shift Time:","' + totalShiftTime + '"');
+    }
+
+    // --- Begin: Generate filename based on employee and filter ---
+    var employeeSelect = jQuery("#employee");
+    var employeeName = "all-employees";
+    if (employeeSelect.length && employeeSelect.val()) {
+      var selectedOption = employeeSelect.find("option:selected").text().trim();
+      employeeName = selectedOption.replace(/[^a-z0-9]+/gi, '-').toLowerCase();
+    }
+    var filterSelect = jQuery("#aio_range_type");
+    var filterName = "all";
+    if (filterSelect.length && filterSelect.val()) {
+      filterName = filterSelect.find("option:selected").text().trim().replace(/[^a-z0-9]+/gi, '-').toLowerCase();
+    }
+    var filename = employeeName + "_" + filterName + ".csv";
+    // --- End: Generate filename based on employee and filter ---
+
+    var csvContent = csv.join('\n');
+    var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    var link = document.createElement("a");
+    var url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   });
 
 });
