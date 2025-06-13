@@ -63,18 +63,23 @@ if (get_current_user_id() > 0){
                         $break_out_time = $custom['break_out_time'][0] ?? null;
                         $shift_duration = $tc->secondsToTime($tc->getShiftTotal(get_the_ID()));
 
+                        $clock_in = !empty($custom['employee_clock_in_time'][0]) ? date('h:i A', strtotime($custom['employee_clock_in_time'][0])) : '-- : -- : --';
+                        $clock_out = !empty($custom['employee_clock_out_time'][0]) ? date('h:i A', strtotime($custom['employee_clock_out_time'][0])) : '-- : -- : --';
+                        $break_in = !empty($break_in_time) ? date('h:i A', strtotime($break_in_time)) : '-- : -- : --';
+                        $break_out = !empty($break_out_time) ? date('h:i A', strtotime($break_out_time)) : '-- : -- : --';
+
                         $template .= '
                         <tr>
                             <td>Clock In</td>
-                            <td>' . esc_html($custom['employee_clock_in_time'][0] ?? '-- : -- : --') . '</td>
+                            <td>' . esc_html($clock_in) . '</td>
                             <td>On Break</td>
-                            <td>' . esc_html($break_in_time ?? '-- : -- : --') . '</td>
+                            <td>' . esc_html($break_in) . '</td>
                         </tr>
-                        <tr>
+                        <tr></tr>
                             <td>Clock Out</td>
-                            <td>' . esc_html($custom['employee_clock_out_time'][0] ?? '-- : -- : --') . '</td>
+                            <td>' . esc_html($clock_out) . '</td>
                             <td>Off Break</td>
-                            <td>' . esc_html($break_out_time ?? '-- : -- : --') . '</td>
+                            <td>' . esc_html($break_out) . '</td>
                         </tr>
                         <tr>
                             <td colspan="4">Shift Duration: <span>' . esc_html($shift_duration ?? '-- : -- : --') . '</span></td>

@@ -300,24 +300,32 @@ class AIO_Time_Clock_Lite_Actions
                     while ($shifts->have_posts()) {
                         $shifts->the_post();
                         $custom = get_post_custom(get_the_ID());
-                        if (strpos($custom['employee_clock_in_time'][0], $today) !== false) {
-                            echo '
-                            <tr>
-                                <td>Clock In</td>
-                                <td>' . esc_html($custom['employee_clock_in_time'][0] ?? '-- : -- : --') . '</td>
-                                <td>On Break</td>
-                                <td>' . esc_html($custom['break_in_time'][0] ?? '-- : -- : --') . '</td>
-                            </tr>
-                            <tr>
-                                <td>Clock Out</td>
-                                <td>' . esc_html($custom['employee_clock_out_time'][0] ?? '-- : -- : --') . '</td>
-                                <td>Off Break</td>
-                                <td>' . esc_html($custom['break_out_time'][0] ?? '-- : -- : --') . '</td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">Shift Duration: <span>' . esc_html($custom['total_shift_time'][0] ?? '-- : -- : --') . '</span></td>
-                            </tr>';
-                        }
+                        $break_in_time = $custom['break_in_time'][0] ?? null;
+                        $break_out_time = $custom['break_out_time'][0] ?? null;
+                        $shift_duration = $this->secondsToTime($this->getShiftTotal(get_the_ID()));
+
+                        // Format times to h:i A or fallback
+                        $clock_in = !empty($custom['employee_clock_in_time'][0]) ? date('h:i A', strtotime($custom['employee_clock_in_time'][0])) : '-- : -- : --';
+                        $clock_out = !empty($custom['employee_clock_out_time'][0]) ? date('h:i A', strtotime($custom['employee_clock_out_time'][0])) : '-- : -- : --';
+                        $break_in = !empty($break_in_time) ? date('h:i A', strtotime($break_in_time)) : '-- : -- : --';
+                        $break_out = !empty($break_out_time) ? date('h:i A', strtotime($break_out_time)) : '-- : -- : --';
+
+                        echo '
+                        <tr>
+                            <td>Clock In</td>
+                            <td>' . esc_html($clock_in) . '</td>
+                            <td>On Break</td>
+                            <td>' . esc_html($break_in) . '</td>
+                        </tr>
+                        <tr>
+                            <td>Clock Out</td>
+                            <td>' . esc_html($clock_out) . '</td>
+                            <td>Off Break</td>
+                            <td>' . esc_html($break_out) . '</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">Shift Duration: <span>' . esc_html($shift_duration ?? '-- : -- : --') . '</span></td>
+                        </tr>';
                     }
                     wp_reset_postdata();
                 } else {
@@ -1139,6 +1147,8 @@ class AIO_Time_Clock_Lite_Actions
             $custom                  = get_post_custom($shift_id);
             $employee_clock_in_time  = isset($custom["employee_clock_in_time"][0]) ? sanitize_text_field($custom["employee_clock_in_time"][0]) : null;
             $employee_clock_out_time = isset($custom["employee_clock_out_time"][0]) ? sanitize_text_field($custom["employee_clock_out_time"][0]) : null;
+            $break_in_time           = isset($custom["break_in_time"][0]) ? sanitize_text_field($custom["break_in_time"][0]) : null;
+            $break_out_time          = isset($custom["break_out_time"][0]) ? sanitize_text_field($custom["break_out_time"][0]) : null;
             $searchDateBegin         = sanitize_text_field($date_range_start);
             $searchDateEnd           = sanitize_text_field($date_range_end);
             if ((strtotime($employee_clock_in_time) >= strtotime($searchDateBegin)) && (strtotime($employee_clock_in_time) <= strtotime($searchDateEnd))) {
@@ -1161,6 +1171,8 @@ class AIO_Time_Clock_Lite_Actions
                         "shift_id"                => $shift_id,
                         "employee_clock_in_time"  => $this->cleanDate($employee_clock_in_time),
                         "employee_clock_out_time" => $this->cleanDate($employee_clock_out_time),
+                        "break_in_time"           => $this->cleanDate($break_in_time),
+                        "break_out_time"          => $this->cleanDate($break_out_time),
                         "first_name"              => $first_name,
                         "last_name"               => $last_name,
                         "shift_sum"               => $shift_sum,
