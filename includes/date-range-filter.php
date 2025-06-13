@@ -21,22 +21,22 @@ function aio_get_year_ranges($current_year = null) {
 
     // Quarters
     $ranges['q1'] = [
-        'label' => "Q1 (Jul–Sep $year)",
+        'label' => "Q1 - $year (Jul–Sep)",
         'start' => "$year-07-01",
         'end'   => "$year-09-30"
     ];
     $ranges['q2'] = [
-        'label' => "Q2 (Oct–Dec $year)",
+        'label' => "Q2 - $year (Oct–Dec)",
         'start' => "$year-10-01",
         'end'   => "$year-12-31"
     ];
     $ranges['q3'] = [
-        'label' => "Q3 (Jan–Mar " . ($year+1) . ")",
+        'label' => "Q3 - " . ($year+1) . " (Jan–Mar)",
         'start' => ($year+1) . "-01-01",
         'end'   => ($year+1) . "-03-31"
     ];
     $ranges['q4'] = [
-        'label' => "Q4 (Apr–Jun " . ($year+1) . ")",
+        'label' => "Q4 - " . ($year+1) . " (Apr–Jun)",
         'start' => ($year+1) . "-04-01",
         'end'   => ($year+1) . "-06-30"
     ];

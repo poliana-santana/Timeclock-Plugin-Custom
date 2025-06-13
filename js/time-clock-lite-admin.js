@@ -156,12 +156,27 @@ jQuery(function () {
       csv.push('"Total Shift Time:","' + totalShiftTime + '"');
     }
 
+    // --- Begin: Generate filename based on employee and filter ---
+    var employeeSelect = jQuery("#employee");
+    var employeeName = "all-employees";
+    if (employeeSelect.length && employeeSelect.val()) {
+      var selectedOption = employeeSelect.find("option:selected").text().trim();
+      employeeName = selectedOption.replace(/[^a-z0-9]+/gi, '-').toLowerCase();
+    }
+    var filterSelect = jQuery("#aio_range_type");
+    var filterName = "all";
+    if (filterSelect.length && filterSelect.val()) {
+      filterName = filterSelect.find("option:selected").text().trim().replace(/[^a-z0-9]+/gi, '-').toLowerCase();
+    }
+    var filename = employeeName + "_" + filterName + ".csv";
+    // --- End: Generate filename based on employee and filter ---
+
     var csvContent = csv.join('\n');
     var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     var link = document.createElement("a");
     var url = URL.createObjectURL(blob);
     link.setAttribute("href", url);
-    link.setAttribute("download", "timeclock-report.csv");
+    link.setAttribute("download", filename);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
