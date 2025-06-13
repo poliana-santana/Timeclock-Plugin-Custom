@@ -520,8 +520,14 @@ class AIO_Time_Clock_Lite_Actions
         $message          = "";
         $response_html    = "";
         $employee         = isset($_POST["employee"]) ? intval($_POST["employee"]) : intval($current_user->ID);
-        $date_range_start = date($this->mysqlDateFormat, strtotime(sanitize_text_field($_POST["aio_pp_start_date"])));
-        $date_range_end   = date($this->mysqlDateFormat, strtotime(sanitize_text_field($_POST["aio_pp_end_date"])));
+
+        // When dates are empty, date range should not be converted to MySQL format to avoid a blank date range
+        $date_range_start = isset($_POST["aio_pp_start_date"]) && $_POST["aio_pp_start_date"] !== ''
+            ? date($this->mysqlDateFormat, strtotime(sanitize_text_field($_POST["aio_pp_start_date"])))
+            : '';
+        $date_range_end = isset($_POST["aio_pp_end_date"]) && $_POST["aio_pp_end_date"] !== ''
+            ? date($this->mysqlDateFormat, strtotime(sanitize_text_field($_POST["aio_pp_end_date"])))
+            : '';
         $errors           = null;
 
         if (wp_verify_nonce($nonce, 'time-clock-nonce')) {
@@ -1150,7 +1156,18 @@ class AIO_Time_Clock_Lite_Actions
             $break_out_time          = isset($custom["break_out_time"][0]) ? sanitize_text_field($custom["break_out_time"][0]) : null;
             $searchDateBegin         = sanitize_text_field($date_range_start);
             $searchDateEnd           = sanitize_text_field($date_range_end);
-            if ((strtotime($employee_clock_in_time) >= strtotime($searchDateBegin)) && (strtotime($employee_clock_in_time) <= strtotime($searchDateEnd))) {
+
+            // If "all" is selected, $date_range_start and $date_range_end are empty, so include all shifts
+            $include_shift = false;
+            if (empty($searchDateBegin) || empty($searchDateEnd)) {
+                $include_shift = true;
+            } else {
+                if ((strtotime($employee_clock_in_time) >= strtotime($searchDateBegin)) && (strtotime($employee_clock_in_time) <= strtotime($searchDateEnd))) {
+                    $include_shift = true;
+                }
+            }
+
+            if ($include_shift) {
                 $author_id  = $loop->post->post_author;
                 $last_name  = sanitize_text_field(get_the_author_meta('last_name', $author_id));
                 $first_name = sanitize_text_field(get_the_author_meta('first_name', $author_id));
